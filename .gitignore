@@ -1,2 +1,9 @@
 **/*.csv
 **/*.sh
+**/*.localz
+**/*.local
+**/*.git
+**/*.DS_Store
+**/*.excalidraw
+**/*.dmd
+**/*.xml
