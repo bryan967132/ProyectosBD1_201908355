@@ -9,8 +9,6 @@ CREATE TABLE Test(
 INSERT INTO Test(id, texto) VALUES(1, "Hola Mundo");
 INSERT INTO Test(id, texto) VALUES(2, "Es Una Prueba");
 
-SELECT * FROM Test;
-
 CREATE TABLE categoria (
     id     INTEGER NOT NULL,
     nombre VARCHAR(100) NOT NULL

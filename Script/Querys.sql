@@ -1,0 +1,3 @@
+USE BD1P1;
+
+SELECT * FROM Test;
