@@ -1,5 +1,5 @@
 
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"  width="713" height="360">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"  width="719" height="360">
 <defs id="dmw_defs" >
 <svg id="fk_sym" viewBox="0 0 48.665 48.665" style="enable-background:new 0 0 48.665 48.665;" >
 <g>
@@ -47,66 +47,24 @@
 <path stroke-dasharray="none" d="M127.0 187.0 L121.0 199.0 L115.0 187.0" fill="white" stroke-width="1" stroke-opacity="1.0" stroke="rgb(0,0,0)" />
 </g>
 <g stroke-linecap="butt" >
-<path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-dasharray="8,8" stroke-width="1" d="M543 116 L489 116" />
-<path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-width="1" d="M489 116 L454 116" />
-<path stroke-dasharray="none" d="M454.0 110.0 L466.0 116.0 L454.0 122.0" fill="white" stroke-width="1" stroke-opacity="1.0" stroke="rgb(0,0,0)" />
+<path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-dasharray="8,8" stroke-width="1" d="M369 249 L369 203" />
+<path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-width="1" d="M369 203 L369 167" />
+<path stroke-dasharray="none" d="M375.0 167.0 L369.0 179.0 L363.0 167.0" fill="white" stroke-width="1" stroke-opacity="1.0" stroke="rgb(0,0,0)" />
 </g>
 <g stroke-linecap="butt" >
-<path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-dasharray="8,8" stroke-width="1" d="M206 112 L241 112" />
-<path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-width="1" d="M276 112 L241 112" />
-<path stroke-dasharray="none" d="M276.0 118.0 L264.0 112.0 L276.0 106.0" fill="white" stroke-width="1" stroke-opacity="1.0" stroke="rgb(0,0,0)" />
+<path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-dasharray="8,8" stroke-width="1" d="M206 112 L245 112" />
+<path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-width="1" d="M284 112 L245 112" />
+<path stroke-dasharray="none" d="M284.0 118.0 L272.0 112.0 L284.0 106.0" fill="white" stroke-width="1" stroke-opacity="1.0" stroke="rgb(0,0,0)" />
 </g>
 <g stroke-linecap="butt" >
-<path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-dasharray="8,8" stroke-width="1" d="M370 250 L370 190" />
-<path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-width="1" d="M370 190 L370 167" />
-<path stroke-dasharray="none" d="M376.0 167.0 L370.0 179.0 L364.0 167.0" fill="white" stroke-width="1" stroke-opacity="1.0" stroke="rgb(0,0,0)" />
+<path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-dasharray="8,8" stroke-width="1" d="M549 114 L482 114" />
+<path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-width="1" d="M482 114 L454 114" />
+<path stroke-dasharray="none" d="M454.0 108.0 L466.0 114.0 L454.0 120.0" fill="white" stroke-width="1" stroke-opacity="1.0" stroke="rgb(0,0,0)" />
 </g>
 <g stroke-linecap="butt" >
-<path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-dasharray="8,8" stroke-width="1" d="M543 304 L498 304" />
-<path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-width="1" d="M454 304 L498 304" />
-<path stroke-dasharray="none" d="M454.0 298.0 L466.0 304.0 L454.0 310.0" fill="white" stroke-width="1" stroke-opacity="1.0" stroke="rgb(0,0,0)" />
-</g>
-<g  fill="rgb(164,225,255)" stroke="rgb(0,0,255)" fill-opacity="1.0" stroke-opacity="1.0" clip-path="url(#clipPath4_0_)" transform="translate(37,250)" >
-<rect x="0" y="0" width="169" height="109" rx="20" ry="20" />
-<text id="A48649FA-476327327005" x="74" y="14" fill="rgb(0,0,255)" font-weight="bold"  fill-opacity="1.0" font-size="10" stroke="none">
-Pais
-</text>
-<text x="16" y="32" fill="rgb(255,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
-*
-</text>
-<text x="2" y="32" fill="rgb(0,0,255)" fill-opacity="1.0" font-size="10" stroke="none">
-P
-</text>
-<text x="26" y="32" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
-id
-</text>
-<text x="16" y="46" fill="rgb(255,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
-*
-</text>
-<text x="26" y="46" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
-nombre
-</text>
-</g>
-<g  fill="rgb(164,225,255)" stroke="rgb(0,0,255)" fill-opacity="1.0" stroke-opacity="1.0" clip-path="url(#clipPath1_0_)" transform="translate(543,248)" >
-<rect x="0" y="0" width="169" height="109" rx="20" ry="20" />
-<text id="B01F1DD9-6CBDF9F34D00" x="61" y="14" fill="rgb(0,0,255)" font-weight="bold"  fill-opacity="1.0" font-size="10" stroke="none">
-Categoria
-</text>
-<text x="16" y="32" fill="rgb(255,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
-*
-</text>
-<text x="2" y="32" fill="rgb(0,0,255)" fill-opacity="1.0" font-size="10" stroke="none">
-P
-</text>
-<text x="26" y="32" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
-id
-</text>
-<text x="16" y="46" fill="rgb(255,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
-*
-</text>
-<text x="26" y="46" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
-nombre
-</text>
+<path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-dasharray="8,8" stroke-width="1" d="M632 242 L632 206" />
+<path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-width="1" d="M632 170 L632 206" />
+<path stroke-dasharray="none" d="M638.0 170.0 L632.0 182.0 L626.0 170.0" fill="white" stroke-width="1" stroke-opacity="1.0" stroke="rgb(0,0,0)" />
 </g>
 <g  fill="rgb(164,225,255)" stroke="rgb(0,0,255)" fill-opacity="1.0" stroke-opacity="1.0" clip-path="url(#clipPath2_0_)" transform="translate(36,34)" >
 <rect x="0" y="0" width="169" height="152" rx="20" ry="20" />
@@ -171,7 +129,28 @@ salario
 genero
 </text>
 </g>
-<g  fill="rgb(164,225,255)" stroke="rgb(0,0,255)" fill-opacity="1.0" stroke-opacity="1.0" clip-path="url(#clipPath6_0_)" transform="translate(543,57)" >
+<g  fill="rgb(164,225,255)" stroke="rgb(0,0,255)" fill-opacity="1.0" stroke-opacity="1.0" clip-path="url(#clipPath4_0_)" transform="translate(37,250)" >
+<rect x="0" y="0" width="169" height="109" rx="20" ry="20" />
+<text id="A48649FA-476327327005" x="74" y="14" fill="rgb(0,0,255)" font-weight="bold"  fill-opacity="1.0" font-size="10" stroke="none">
+Pais
+</text>
+<text x="16" y="32" fill="rgb(255,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
+*
+</text>
+<text x="2" y="32" fill="rgb(0,0,255)" fill-opacity="1.0" font-size="10" stroke="none">
+P
+</text>
+<text x="26" y="32" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
+id
+</text>
+<text x="16" y="46" fill="rgb(255,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
+*
+</text>
+<text x="26" y="46" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
+nombre
+</text>
+</g>
+<g  fill="rgb(164,225,255)" stroke="rgb(0,0,255)" fill-opacity="1.0" stroke-opacity="1.0" clip-path="url(#clipPath6_0_)" transform="translate(285,249)" >
 <rect x="0" y="0" width="169" height="109" rx="20" ry="20" />
 <text id="B0FC4931-535AC829BB4F" x="61" y="14" fill="rgb(0,0,255)" font-weight="bold"  fill-opacity="1.0" font-size="10" stroke="none">
 Vendedor
@@ -198,7 +177,7 @@ nombre
 apellido
 </text>
 </g>
-<g  fill="rgb(164,225,255)" stroke="rgb(0,0,255)" fill-opacity="1.0" stroke-opacity="1.0" clip-path="url(#clipPath5_0_)" transform="translate(284,250)" >
+<g  fill="rgb(164,225,255)" stroke="rgb(0,0,255)" fill-opacity="1.0" stroke-opacity="1.0" clip-path="url(#clipPath5_0_)" transform="translate(549,60)" >
 <rect x="0" y="0" width="169" height="109" rx="20" ry="20" />
 <text id="6411C231-FB560CDA5A5B" x="63" y="14" fill="rgb(0,0,255)" font-weight="bold"  fill-opacity="1.0" font-size="10" stroke="none">
 Producto
@@ -223,6 +202,27 @@ nombre
 </text>
 <text x="26" y="60" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
 precio
+</text>
+</g>
+<g  fill="rgb(164,225,255)" stroke="rgb(0,0,255)" fill-opacity="1.0" stroke-opacity="1.0" clip-path="url(#clipPath1_0_)" transform="translate(546,242)" >
+<rect x="0" y="0" width="169" height="109" rx="20" ry="20" />
+<text id="B01F1DD9-6CBDF9F34D00" x="61" y="14" fill="rgb(0,0,255)" font-weight="bold"  fill-opacity="1.0" font-size="10" stroke="none">
+Categoria
+</text>
+<text x="16" y="32" fill="rgb(255,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
+*
+</text>
+<text x="2" y="32" fill="rgb(0,0,255)" fill-opacity="1.0" font-size="10" stroke="none">
+P
+</text>
+<text x="26" y="32" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
+id
+</text>
+<text x="16" y="46" fill="rgb(255,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
+*
+</text>
+<text x="26" y="46" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
+nombre
 </text>
 </g>
 <g  fill="rgb(164,225,255)" stroke="rgb(0,0,255)" fill-opacity="1.0" stroke-opacity="1.0" clip-path="url(#clipPath3_0_)" transform="translate(284,57)" >
