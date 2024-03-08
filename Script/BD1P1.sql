@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS cliente (
     nombre    VARCHAR(100) NOT NULL,
     apellido  VARCHAR(100) NOT NULL,
     direccion VARCHAR(255) NOT NULL,
-    telefono  VARCHAR(8) NOT NULL,
+    telefono  VARCHAR(10) NOT NULL,
     tarjeta   VARCHAR(16) NOT NULL,
     edad      INTEGER NOT NULL,
     salario   FLOAT(2) NOT NULL,
@@ -28,7 +28,9 @@ CREATE TABLE IF NOT EXISTS cliente (
 CREATE TABLE IF NOT EXISTS vendedor (
     id       INTEGER PRIMARY KEY NOT NULL,
     nombre   VARCHAR(100) NOT NULL,
-    apellido VARCHAR(100) NOT NULL
+    apellido VARCHAR(100) NOT NULL,
+    pais_id   INTEGER NOT NULL,
+    FOREIGN KEY (pais_id) REFERENCES pais(id)
 );
 
 CREATE TABLE IF NOT EXISTS producto (
