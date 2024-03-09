@@ -27,7 +27,7 @@ func NewController() *Controller {
 }
 
 func (c *Controller) connect() bool {
-	c.DB, c.err = sql.Open("mysql", fmt.Sprintf("%v:%v@tcp(%v)/%v", os.Getenv("DB_USER"), os.Getenv("DB_PASS"), os.Getenv("DB_HOST"), os.Getenv("DB_NAME")))
+	c.DB, c.err = sql.Open("mysql", fmt.Sprintf("%v:%v@tcp(%v:%v)/%v", os.Getenv("DB_USER"), os.Getenv("DB_PASS"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB_NAME")))
 	if c.err != nil {
 		return false
 	}
