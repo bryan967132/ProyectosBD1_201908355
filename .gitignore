@@ -7,3 +7,4 @@
 **/*.excalidraw
 **/*.dmd
 **/*.xml
+**/.env
