@@ -8,3 +8,4 @@
 **/*.dmd
 **/*.xml
 **/.env
+**/__pycache__
