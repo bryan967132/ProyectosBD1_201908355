@@ -27,7 +27,7 @@ func NewController() *Controller {
 }
 
 func (c *Controller) connect() bool {
-	c.DB, c.err = sql.Open("mysql", "root:for00nite@tcp(127.0.0.1:3306)/BD1P1")
+	c.DB, c.err = sql.Open("mysql", fmt.Sprintf("%v:%v@tcp(%v)/%v", os.Getenv("DB_USER"), os.Getenv("DB_PASS"), os.Getenv("DB_HOST"), os.Getenv("DB_NAME")))
 	if c.err != nil {
 		return false
 	}
@@ -36,38 +36,18 @@ func (c *Controller) connect() bool {
 	if c.err != nil {
 		return false
 	}
+
+	c.DB.SetMaxOpenConns(100 * 1024)
 	return true
+}
+
+func (c *Controller) disconnect() {
+	c.DB.Close()
 }
 
 func (c *Controller) Running(ctx *fiber.Ctx) error {
 	return ctx.JSON(fiber.Map{
-		"status": "Interpreter is running!!!",
-	})
-}
-
-func (c *Controller) Test(ctx *fiber.Ctx) error {
-	rows, err := c.DB.Query("SELECT * FROM Test;")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer rows.Close()
-
-	response := []fiber.Map{}
-
-	for rows.Next() {
-		var id int
-		var texto string
-		if err := rows.Scan(&id, &texto); err != nil {
-			log.Fatal(err)
-		}
-		response = append(response, fiber.Map{"id": id, "texto": texto})
-	}
-	if err := rows.Err(); err != nil {
-		log.Fatal(err)
-	}
-	return ctx.JSON(fiber.Map{
-		"status":   "Finish Test",
-		"response": response,
+		"status": "Server is running!!!",
 	})
 }
 

@@ -14,7 +14,6 @@ func main() {
 	endpoints := controller.NewController()
 
 	app.Get("/", endpoints.Running)
-	app.Get("/test", endpoints.Test)
 	app.Get("/consulta1", endpoints.Query1)
 	app.Get("/consulta2", endpoints.Query2)
 	app.Get("/consulta3", endpoints.Query3)
