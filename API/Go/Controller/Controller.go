@@ -113,6 +113,7 @@ func (c *Controller) Query10(ctx *fiber.Ctx) error {
 
 func (c *Controller) Deletemodel(ctx *fiber.Ctx) error {
 	script := `DROP TABLE IF EXISTS orden;
+	DROP TABLE IF EXISTS datoorden;
 	DROP TABLE IF EXISTS producto;
 	DROP TABLE IF EXISTS vendedor;
 	DROP TABLE IF EXISTS cliente;
@@ -143,6 +144,7 @@ func (c *Controller) Createmodel(ctx *fiber.Ctx) error {
 func (c *Controller) Deleteinfo(ctx *fiber.Ctx) error {
 	script := `SET FOREIGN_KEY_CHECKS = 0;
 	TRUNCATE TABLE orden;
+	TRUNCATE TABLE datoorden;
 	TRUNCATE TABLE producto;
 	TRUNCATE TABLE vendedor;
 	TRUNCATE TABLE cliente;
