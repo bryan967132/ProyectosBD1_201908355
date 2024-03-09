@@ -27,7 +27,7 @@ func NewController() *Controller {
 }
 
 func (c *Controller) connect() bool {
-	c.DB, c.err = sql.Open("mysql", fmt.Sprintf("%v:%v@tcp(%v:%v)/%v", os.Getenv("DB_USER"), os.Getenv("DB_PASS"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB_NAME")))
+	c.DB, c.err = sql.Open("mysql", "root:for00nite@tcp(127.0.0.1:3306)/BD1P1")
 	if c.err != nil {
 		return false
 	}
@@ -129,7 +129,7 @@ func (c *Controller) Deletemodel(ctx *fiber.Ctx) error {
 }
 
 func (c *Controller) Createmodel(ctx *fiber.Ctx) error {
-	fileData, _ := ioutil.ReadFile("../../Script/BD1P1.sql")
+	fileData, _ := ioutil.ReadFile("../../../Script/BD1P1.sql")
 
 	for _, query := range strings.Split(string(fileData), ";") {
 		c.DB.Exec(query)
@@ -161,12 +161,12 @@ func (c *Controller) Deleteinfo(ctx *fiber.Ctx) error {
 
 func (c *Controller) Postdatamodel(ctx *fiber.Ctx) error {
 	files := []string{
-		"../../Data/paises.csv",
-		"../../Data/Categorias.csv",
-		"../../Data/clientes.csv",
-		"../../Data/vendedores.csv",
-		"../../Data/productos.csv",
-		"../../Data/ordenes.csv",
+		"../../../Data/paises.csv",
+		"../../../Data/Categorias.csv",
+		"../../../Data/clientes.csv",
+		"../../../Data/vendedores.csv",
+		"../../../Data/productos.csv",
+		"../../../Data/ordenes.csv",
 	}
 
 	for i, r := range files {
@@ -194,35 +194,35 @@ func (c *Controller) Postdatamodel(ctx *fiber.Ctx) error {
 				continue
 			}
 			if i == 0 { // Pais
-				_, err := c.DB.Query("INSERT INTO pais (id, nombre) VALUE (?, ?)", line[0], line[1])
+				_, err := c.DB.Exec(fmt.Sprintf(`INSERT INTO pais (id, nombre) VALUE (%s, "%s")`, line[0], line[1]))
 				if err != nil {
 					fmt.Println("Error al insertar pais", err)
 				}
 			} else if i == 1 { // Categoria
-				_, err := c.DB.Query("INSERT INTO categoria (id, nombre) VALUE (?, ?)", line[0], line[1])
+				_, err := c.DB.Exec(fmt.Sprintf(`INSERT INTO categoria (id, nombre) VALUE (%s, "%s")`, line[0], line[1]))
 				if err != nil {
 					fmt.Println("Error al insertar categoria", err)
 				}
 			} else if i == 2 { // Cliente
-				_, err := c.DB.Query("INSERT INTO cliente (id, nombre, apellido, direccion, telefono, tarjeta, edad, salario, genero, pais_id) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", line[0], line[1], line[2], line[3], line[4], line[5], line[6], line[7], line[8], line[9])
+				_, err := c.DB.Exec(fmt.Sprintf(`INSERT INTO cliente (id, nombre, apellido, direccion, telefono, tarjeta, edad, salario, genero, pais_id) VALUE (%s, "%s", "%s", "%s", "%s", "%s", %s, %s, "%s", %s)`, line[0], line[1], line[2], line[3], line[4], line[5], line[6], line[7], line[8], line[9]))
 				if err != nil {
 					fmt.Println("Error al insertar cliente", err)
 				}
 			} else if i == 3 { // Vendedor
 				fullName := strings.Split(line[1], " ")
-				_, err := c.DB.Query("INSERT INTO vendedor (id, nombre, apellido, pais_id) VALUE (?, ?, ?, ?)", line[0], fullName[0], fullName[1], line[2])
+				_, err := c.DB.Exec(fmt.Sprintf(`INSERT INTO vendedor (id, nombre, apellido, pais_id) VALUE (%s, "%s", "%s", %s)`, line[0], fullName[0], fullName[1], line[2]))
 				if err != nil {
 					fmt.Println("Error al insertar vendedor", err)
 				}
 			} else if i == 4 { // Producto
-				_, err := c.DB.Query("INSERT INTO producto (id, nombre, precio, categoria_id) VALUE (?, ?, ?, ?)", line[0], line[1], line[2], line[3])
+				_, err := c.DB.Exec(fmt.Sprintf(`INSERT INTO producto (id, nombre, precio, categoria_id) VALUE (%s, "%s", %s, %s)`, line[0], line[1], line[2], line[3]))
 				if err != nil {
 					fmt.Println("Error al insertar producto", err)
 				}
 			} else { // Orden
 				date := strings.Split(line[2], "/")
 				line[2] = fmt.Sprintf("%s-%s-%s", date[2], date[1], date[0])
-				_, err := c.DB.Query("INSERT INTO orden (id, linea, fecha, cantidad, cliente_id, vendedor_id, producto_id) VALUE (?, ?, ?, ?, ?, ?, ?)", line[0], line[1], line[2], line[6], line[3], line[4], line[5])
+				_, err := c.DB.Exec(fmt.Sprintf(`INSERT INTO orden (id, linea, fecha, cantidad, cliente_id, vendedor_id, producto_id) VALUE (%s, '%s', %s, %s, %s, %s, %s)`, line[0], line[1], line[2], line[6], line[3], line[4], line[5]))
 				if err != nil {
 					fmt.Println("Error al insertar orden", err)
 				}
