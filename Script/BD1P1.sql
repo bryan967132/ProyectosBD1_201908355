@@ -25,11 +25,18 @@ CREATE TABLE IF NOT EXISTS cliente (
     FOREIGN KEY (pais_id) REFERENCES pais(id)
 );
 
+CREATE TABLE IF NOT EXISTS orden (
+	id          INTEGER PRIMARY KEY NOT NULL,
+    fecha       DATE NOT NULL,
+	cliente_id  INTEGER NOT NULL,
+    FOREIGN KEY (cliente_id) REFERENCES cliente(id)
+);
+
 CREATE TABLE IF NOT EXISTS vendedor (
     id       INTEGER PRIMARY KEY NOT NULL,
     nombre   VARCHAR(100) NOT NULL,
     apellido VARCHAR(100) NOT NULL,
-    pais_id   INTEGER NOT NULL,
+    pais_id  INTEGER NOT NULL,
     FOREIGN KEY (pais_id) REFERENCES pais(id)
 );
 
@@ -41,15 +48,14 @@ CREATE TABLE IF NOT EXISTS producto (
     FOREIGN KEY (categoria_id) REFERENCES categoria(id)
 );
 
-CREATE TABLE IF NOT EXISTS orden (
-    id          INTEGER PRIMARY KEY NOT NULL,
+CREATE TABLE IF NOT EXISTS datoorden (
+	id          INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     linea       INTEGER NOT NULL,
-    fecha       DATE NOT NULL,
     cantidad    INTEGER NOT NULL,
-    cliente_id  INTEGER NOT NULL,
+    orden_id    INTEGER NOT NULL,
     vendedor_id INTEGER NOT NULL,
     producto_id INTEGER NOT NULL,
-    FOREIGN KEY (cliente_id) REFERENCES cliente(id),
+    FOREIGN KEY (orden_id) REFERENCES orden(id),
     FOREIGN KEY (vendedor_id) REFERENCES vendedor(id),
     FOREIGN KEY (producto_id) REFERENCES producto(id)
 );
