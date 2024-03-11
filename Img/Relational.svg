@@ -26,7 +26,7 @@
 <rect x="0" y="0" width="176" height="75" />
 </clipPath>
 <clipPath clipPathUnits="userSpaceOnUse" id="clipPath3_0_">
-<rect x="0" y="0" width="184" height="163" />
+<rect x="0" y="0" width="210" height="181" />
 </clipPath>
 <clipPath clipPathUnits="userSpaceOnUse" id="clipPath6_0_">
 <rect x="0" y="0" width="212" height="120" />
@@ -70,14 +70,14 @@
 <path stroke-dasharray="none" d="M297.0 136.0 L285.0 130.0 L297.0 124.0 M284.4000005722046 136.0 L284.4000005722046 124.0" fill="white" stroke-width="1" stroke-opacity="1.0" stroke="rgb(0,0,0)" />
 </g>
 <g stroke-linecap="butt" >
-<path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-width="1" d="M559 304 L481 304" />
+<path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-width="1" d="M559 304 L496 304" />
 <polygon stroke="rgb(0,0,0)" stroke-dasharray="none" points="559 304 553 307 553 301" fill="rgb(0,0,0)" stroke-width="1" stroke-opacity="1.0"  />
-<path stroke-dasharray="none" d="M481.0 298.0 L493.0 304.0 L481.0 310.0 M493.5999994277954 298.0 L493.5999994277954 310.0" fill="white" stroke-width="1" stroke-opacity="1.0" stroke="rgb(0,0,0)" />
+<path stroke-dasharray="none" d="M496.0 298.0 L508.0 304.0 L496.0 310.0 M508.5999994277954 298.0 L508.5999994277954 310.0" fill="white" stroke-width="1" stroke-opacity="1.0" stroke="rgb(0,0,0)" />
 </g>
 <g stroke-linecap="butt" >
-<path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-width="1" d="M392 470 L392 402" />
-<polygon stroke="rgb(0,0,0)" stroke-dasharray="none" points="392 470 389 464 395 464" fill="rgb(0,0,0)" stroke-width="1" stroke-opacity="1.0"  />
-<path stroke-dasharray="none" d="M398.0 402.0 L392.0 414.0 L386.0 402.0 M398.0 414.5999994277954 L386.0 414.5999994277954" fill="white" stroke-width="1" stroke-opacity="1.0" stroke="rgb(0,0,0)" />
+<path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-width="1" d="M395 470 L395 420" />
+<polygon stroke="rgb(0,0,0)" stroke-dasharray="none" points="395 470 392 464 398 464" fill="rgb(0,0,0)" stroke-width="1" stroke-opacity="1.0"  />
+<path stroke-dasharray="none" d="M401.0 420.0 L395.0 432.0 L389.0 420.0 M401.0 432.5999994277954 L389.0 432.5999994277954" fill="white" stroke-width="1" stroke-opacity="1.0" stroke="rgb(0,0,0)" />
 </g>
 <g  fill="rgb(255,255,180)" stroke="rgb(0,0,255)" fill-opacity="1.0" stroke-opacity="1.0" clip-path="url(#clipPath1_0_)" transform="translate(588,471)" >
 <rect x="0" y="0" width="175" height="74" />
@@ -112,12 +112,12 @@ VARCHAR2 (100)
 Categoria_PK (id)
 </text>
 </g>
-<g  fill="rgb(255,255,180)" stroke="rgb(0,0,255)" fill-opacity="1.0" stroke-opacity="1.0" clip-path="url(#clipPath3_0_)" transform="translate(297,239)" >
-<rect x="0" y="0" width="183" height="162" />
-<text id="5F2838C7-EDFB15B4B91F" x="63" y="14" fill="rgb(0,0,255)" font-weight="bold"  fill-opacity="1.0" font-size="10" stroke="none">
-DatosOrden
+<g  fill="rgb(255,255,180)" stroke="rgb(0,0,255)" fill-opacity="1.0" stroke-opacity="1.0" clip-path="url(#clipPath3_0_)" transform="translate(286,239)" >
+<rect x="0" y="0" width="209" height="180" />
+<text id="5F2838C7-EDFB15B4B91F" x="79" y="14" fill="rgb(0,0,255)" font-weight="bold"  fill-opacity="1.0" font-size="10" stroke="none">
+DatoOrden
 </text>
-<line x1="0" y1="18" x2="182" y2="18" fill="none" stroke="rgb(0,0,255)"/>
+<line x1="0" y1="18" x2="208" y2="18" fill="none" stroke="rgb(0,0,255)"/>
 <text x="16" y="32" fill="rgb(255,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
 *
 </text>
@@ -125,7 +125,7 @@ DatosOrden
 P
 </text>
 <text x="26" y="32" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
-linea
+id
 </text>
 <text x="107" y="32" fill="rgb(0,128,0)" fill-opacity="1.0" font-size="10" stroke="none">
 INTEGER
@@ -134,7 +134,7 @@ INTEGER
 *
 </text>
 <text x="26" y="46" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
-cantidad
+linea
 </text>
 <text x="107" y="46" fill="rgb(0,128,0)" fill-opacity="1.0" font-size="10" stroke="none">
 INTEGER
@@ -142,11 +142,8 @@ INTEGER
 <text x="16" y="60" fill="rgb(255,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
 *
 </text>
-<text x="2" y="60" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
-F
-</text>
 <text x="26" y="60" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
-Orden_id
+cantidad
 </text>
 <text x="107" y="60" fill="rgb(0,128,0)" fill-opacity="1.0" font-size="10" stroke="none">
 INTEGER
@@ -158,7 +155,7 @@ INTEGER
 F
 </text>
 <text x="26" y="74" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
-Vendedor_id
+Orden_id
 </text>
 <text x="107" y="74" fill="rgb(0,128,0)" fill-opacity="1.0" font-size="10" stroke="none">
 INTEGER
@@ -170,27 +167,39 @@ INTEGER
 F
 </text>
 <text x="26" y="88" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
-Producto_id
+Vendedor_id
 </text>
 <text x="107" y="88" fill="rgb(0,128,0)" fill-opacity="1.0" font-size="10" stroke="none">
 INTEGER
 </text>
-<line x1="0" y1="94" x2="182" y2="94" fill="none" stroke="rgb(0,0,255)"/>
-<use xlink:href="#pk_sym" x="4" y="101" width="8" height="8" fill-opacity="1.0"/>
-<text x="16" y="108" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
-Orden_PKv2 (linea)
+<text x="16" y="102" fill="rgb(255,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
+*
 </text>
-<line x1="0" y1="114" x2="182" y2="114" fill="none" stroke="rgb(0,0,255)"/>
-<use xlink:href="#fk_sym" x="4" y="121" width="8" height="8" fill-opacity="1.0"/><a xlink:href="#7AD38E2F-A04FA957EAA4" >
-<text x="16" y="128" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
+<text x="2" y="102" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
+F
+</text>
+<text x="26" y="102" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
+Producto_id
+</text>
+<text x="107" y="102" fill="rgb(0,128,0)" fill-opacity="1.0" font-size="10" stroke="none">
+INTEGER
+</text>
+<line x1="0" y1="108" x2="208" y2="108" fill="none" stroke="rgb(0,0,255)"/>
+<use xlink:href="#pk_sym" x="4" y="115" width="8" height="8" fill-opacity="1.0"/>
+<text x="16" y="122" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
+Orden_PKv2 (id)
+</text>
+<line x1="0" y1="128" x2="208" y2="128" fill="none" stroke="rgb(0,0,255)"/>
+<use xlink:href="#fk_sym" x="4" y="135" width="8" height="8" fill-opacity="1.0"/><a xlink:href="#7AD38E2F-A04FA957EAA4" >
+<text x="16" y="142" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
 Orden_Vendedor_FK (Vendedor_id)
 </text></a>
-<use xlink:href="#fk_sym" x="4" y="135" width="8" height="8" fill-opacity="1.0"/><a xlink:href="#6CEB37F7-6E9263B5DA66" >
-<text x="16" y="142" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
+<use xlink:href="#fk_sym" x="4" y="149" width="8" height="8" fill-opacity="1.0"/><a xlink:href="#6CEB37F7-6E9263B5DA66" >
+<text x="16" y="156" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
 Orden_Producto_FK (Producto_id)
 </text></a>
-<use xlink:href="#fk_sym" x="4" y="149" width="8" height="8" fill-opacity="1.0"/><a xlink:href="#90A49F5A-7E76A78321DF" >
-<text x="16" y="156" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
+<use xlink:href="#fk_sym" x="4" y="163" width="8" height="8" fill-opacity="1.0"/><a xlink:href="#90A49F5A-7E76A78321DF" >
+<text x="16" y="170" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
 DatosOrden_Orden_FK (Orden_id)
 </text></a>
 </g>
@@ -310,6 +319,56 @@ Vendedor_PK (id)
 <use xlink:href="#fk_sym" x="4" y="107" width="8" height="8" fill-opacity="1.0"/><a xlink:href="#C8CCAAE0-86DD83E558C8" >
 <text x="16" y="114" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
 Vendedor_Pais_FK (Pais_id)
+</text></a>
+</g>
+<g  fill="rgb(255,255,180)" stroke="rgb(0,0,255)" fill-opacity="1.0" stroke-opacity="1.0" clip-path="url(#clipPath4_0_)" transform="translate(297,75)" >
+<rect x="0" y="0" width="169" height="109" />
+<text id="90A49F5A-7E76A78321DF" x="70" y="14" fill="rgb(0,0,255)" font-weight="bold"  fill-opacity="1.0" font-size="10" stroke="none">
+Orden
+</text>
+<line x1="0" y1="18" x2="168" y2="18" fill="none" stroke="rgb(0,0,255)"/>
+<text x="16" y="32" fill="rgb(255,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
+*
+</text>
+<text x="2" y="32" fill="rgb(0,0,255)" fill-opacity="1.0" font-size="10" stroke="none">
+P
+</text>
+<text x="26" y="32" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
+id
+</text>
+<text x="95" y="32" fill="rgb(0,128,0)" fill-opacity="1.0" font-size="10" stroke="none">
+INTEGER
+</text>
+<text x="16" y="46" fill="rgb(255,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
+*
+</text>
+<text x="26" y="46" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
+fecha
+</text>
+<text x="95" y="46" fill="rgb(0,128,0)" fill-opacity="1.0" font-size="10" stroke="none">
+DATE
+</text>
+<text x="16" y="60" fill="rgb(255,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
+*
+</text>
+<text x="2" y="60" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
+F
+</text>
+<text x="26" y="60" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
+Cliente_id
+</text>
+<text x="95" y="60" fill="rgb(0,128,0)" fill-opacity="1.0" font-size="10" stroke="none">
+INTEGER
+</text>
+<line x1="0" y1="66" x2="168" y2="66" fill="none" stroke="rgb(0,0,255)"/>
+<use xlink:href="#pk_sym" x="4" y="73" width="8" height="8" fill-opacity="1.0"/>
+<text x="16" y="80" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
+Orden_PK (id)
+</text>
+<line x1="0" y1="86" x2="168" y2="86" fill="none" stroke="rgb(0,0,255)"/>
+<use xlink:href="#fk_sym" x="4" y="93" width="8" height="8" fill-opacity="1.0"/><a xlink:href="#9DE3D6E9-0B939EC82F2A" >
+<text x="16" y="100" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
+Orden_Cliente_FK (Cliente_id)
 </text></a>
 </g>
 <g  fill="rgb(255,255,180)" stroke="rgb(0,0,255)" fill-opacity="1.0" stroke-opacity="1.0" clip-path="url(#clipPath2_0_)" transform="translate(48,63)" >
@@ -457,56 +516,6 @@ VARCHAR2 (100)
 <text x="16" y="66" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
 Pais_PK (id)
 </text>
-</g>
-<g  fill="rgb(255,255,180)" stroke="rgb(0,0,255)" fill-opacity="1.0" stroke-opacity="1.0" clip-path="url(#clipPath4_0_)" transform="translate(297,75)" >
-<rect x="0" y="0" width="169" height="109" />
-<text id="90A49F5A-7E76A78321DF" x="70" y="14" fill="rgb(0,0,255)" font-weight="bold"  fill-opacity="1.0" font-size="10" stroke="none">
-Orden
-</text>
-<line x1="0" y1="18" x2="168" y2="18" fill="none" stroke="rgb(0,0,255)"/>
-<text x="16" y="32" fill="rgb(255,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
-*
-</text>
-<text x="2" y="32" fill="rgb(0,0,255)" fill-opacity="1.0" font-size="10" stroke="none">
-P
-</text>
-<text x="26" y="32" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
-id
-</text>
-<text x="95" y="32" fill="rgb(0,128,0)" fill-opacity="1.0" font-size="10" stroke="none">
-INTEGER
-</text>
-<text x="16" y="46" fill="rgb(255,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
-*
-</text>
-<text x="26" y="46" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
-fecha
-</text>
-<text x="95" y="46" fill="rgb(0,128,0)" fill-opacity="1.0" font-size="10" stroke="none">
-DATE
-</text>
-<text x="16" y="60" fill="rgb(255,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
-*
-</text>
-<text x="2" y="60" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
-F
-</text>
-<text x="26" y="60" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
-Cliente_id
-</text>
-<text x="95" y="60" fill="rgb(0,128,0)" fill-opacity="1.0" font-size="10" stroke="none">
-INTEGER
-</text>
-<line x1="0" y1="66" x2="168" y2="66" fill="none" stroke="rgb(0,0,255)"/>
-<use xlink:href="#pk_sym" x="4" y="73" width="8" height="8" fill-opacity="1.0"/>
-<text x="16" y="80" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
-Orden_PK (id)
-</text>
-<line x1="0" y1="86" x2="168" y2="86" fill="none" stroke="rgb(0,0,255)"/>
-<use xlink:href="#fk_sym" x="4" y="93" width="8" height="8" fill-opacity="1.0"/><a xlink:href="#9DE3D6E9-0B939EC82F2A" >
-<text x="16" y="100" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
-Orden_Cliente_FK (Cliente_id)
-</text></a>
 </g>
 
 </svg>
