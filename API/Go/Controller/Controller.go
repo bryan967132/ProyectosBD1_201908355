@@ -195,21 +195,10 @@ func (c *Controller) Postdatamodel(ctx *fiber.Ctx) error {
 				header = false
 				continue
 			}
-			if i == 0 { // Pais
-				c.DB.Exec(fmt.Sprintf(`INSERT INTO pais (id, nombre) VALUE (%s, "%s")`, line[0], line[1]))
-			} else if i == 1 { // Categoria
-				c.DB.Exec(fmt.Sprintf(`INSERT INTO categoria (id, nombre) VALUE (%s, "%s")`, line[0], line[1]))
-			} else if i == 2 { // Cliente
-				c.DB.Exec(fmt.Sprintf(`INSERT INTO cliente (id, nombre, apellido, direccion, telefono, tarjeta, edad, salario, genero, pais_id) VALUE (%s, "%s", "%s", "%s", "%s", "%s", %s, %s, "%s", %s)`, line[0], line[1], line[2], line[3], line[4], line[5], line[6], line[7], line[8], line[9]))
-			} else if i == 3 { // Vendedor
-				fullName := strings.Split(line[1], " ")
-				c.DB.Exec(fmt.Sprintf(`INSERT INTO vendedor (id, nombre, apellido, pais_id) VALUE (%s, "%s", "%s", %s)`, line[0], fullName[0], fullName[1], line[2]))
-			} else if i == 4 { // Producto
-				c.DB.Exec(fmt.Sprintf(`INSERT INTO producto (id, nombre, precio, categoria_id) VALUE (%s, "%s", %s, %s)`, line[0], line[1], line[2], line[3]))
-			} else { // Orden
+			if i == 5 { // Orden
 				date := strings.Split(line[2], "/")
 				line[2] = fmt.Sprintf("%s-%s-%s", date[2], date[1], date[0])
-				c.DB.Exec(fmt.Sprintf(`INSERT INTO orden (id, fecha, cliente_id) SELECT %s, '%s', %s FROM orden WHERE id != %s`, line[0], line[2], line[3], line[0]))
+				c.DB.Exec(fmt.Sprintf(`INSERT INTO orden (id, fecha, cliente_id) VALUE (%s, '%s', %s)`, line[0], line[2], line[3]))
 				c.DB.Exec(fmt.Sprintf(`INSERT INTO datoorden (linea, cantidad, orden_id, vendedor_id, producto_id) VALUE (%s, %s, %s, %s, %s)`, line[1], line[6], line[0], line[4], line[5]))
 			}
 		}
