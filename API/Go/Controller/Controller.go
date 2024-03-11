@@ -472,8 +472,42 @@ LIMIT 1);`
 }
 
 func (c *Controller) Query10(ctx *fiber.Ctx) error {
+	query := `SELECT pr.id, pr.nombre, SUM(do.cantidad * pr.precio) AS monto
+FROM producto pr
+JOIN datoorden do ON pr.id = do.producto_id
+JOIN categoria cat ON pr.categoria_id = cat.id
+WHERE cat.nombre = 'Deportes'
+GROUP BY pr.id, pr.nombre;`
+	rows, err := c.DB.Query(query)
+	if err != nil {
+		defer rows.Close()
+		return ctx.JSON(fiber.Map{
+			"status": "Query10 error 1",
+		})
+	}
+	defer rows.Close()
+
+	response := []fiber.Map{}
+
+	for rows.Next() {
+		var pr_id int
+		var pr_nombre string
+		var monto float64
+		if err := rows.Scan(&pr_id, &pr_nombre, &monto); err != nil {
+			return ctx.JSON(fiber.Map{
+				"status": "Query10 error 2",
+			})
+		}
+		response = append(response, fiber.Map{
+			"producto": fiber.Map{"id": pr_id, "nombre": pr_nombre},
+			"monto":    monto,
+		})
+	}
+
 	return ctx.JSON(fiber.Map{
-		"status": "Query10",
+		"status":      "Query10",
+		"descripcion": "Ventas de cada producto de la categoria Deportes",
+		"response":    response,
 	})
 }
 
