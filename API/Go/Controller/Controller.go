@@ -92,8 +92,9 @@ LIMIT 1;`
 	}
 
 	return ctx.JSON(fiber.Map{
-		"status":   "Query1",
-		"response": response,
+		"status":      "Query1",
+		"descripcion": "Cliente que mas ha comprado",
+		"response":    response,
 	})
 }
 
