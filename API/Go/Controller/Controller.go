@@ -338,8 +338,46 @@ LIMIT 1);`
 }
 
 func (c *Controller) Query7(ctx *fiber.Ctx) error {
+	query := `SELECT p.nombre AS pais, cat.nombre AS categoria, SUM(do.cantidad) AS cantidad_unidades
+FROM pais p
+JOIN cliente c ON p.id = c.pais_id
+JOIN orden o ON c.id = o.cliente_id
+JOIN datoorden do ON o.id = do.orden_id
+JOIN producto pr ON do.producto_id = pr.id
+JOIN categoria cat ON pr.categoria_id = cat.id
+GROUP BY p.nombre, cat.nombre
+ORDER BY SUM(do.cantidad) DESC;`
+	rows, err := c.DB.Query(query)
+	if err != nil {
+		defer rows.Close()
+		return ctx.JSON(fiber.Map{
+			"status": "Query7 error 1",
+		})
+	}
+	defer rows.Close()
+
+	response := []fiber.Map{}
+
+	for rows.Next() {
+		var p_nombre string
+		var cat_nombre string
+		var cantidad_unidades float64
+		if err := rows.Scan(&p_nombre, &cat_nombre, &cantidad_unidades); err != nil {
+			return ctx.JSON(fiber.Map{
+				"status": "Query7 error 2",
+			})
+		}
+		response = append(response, fiber.Map{
+			"pais":               p_nombre,
+			"categoria":          cat_nombre,
+			"unidades compradas": cantidad_unidades,
+		})
+	}
+
 	return ctx.JSON(fiber.Map{
-		"status": "Query7",
+		"status":      "Query7",
+		"descripcion": "Categoria mas comprada por cada pais",
+		"response":    response,
 	})
 }
 
