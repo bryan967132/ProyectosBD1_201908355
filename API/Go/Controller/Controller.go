@@ -382,8 +382,44 @@ ORDER BY SUM(do.cantidad) DESC;`
 }
 
 func (c *Controller) Query8(ctx *fiber.Ctx) error {
+	query := `SELECT MONTH(o.fecha) AS mes, SUM(do.cantidad * pr.precio) AS monto
+FROM orden o
+JOIN cliente c ON o.cliente_id = c.id
+JOIN datoorden do ON o.id = do.orden_id
+JOIN producto pr ON do.producto_id = pr.id
+JOIN pais p ON c.pais_id = p.id
+WHERE p.nombre = 'Inglaterra'
+GROUP BY mes
+ORDER BY mes ASC;`
+	rows, err := c.DB.Query(query)
+	if err != nil {
+		defer rows.Close()
+		return ctx.JSON(fiber.Map{
+			"status": "Query8 error 1",
+		})
+	}
+	defer rows.Close()
+
+	response := []fiber.Map{}
+
+	for rows.Next() {
+		var mes int
+		var monto string
+		if err := rows.Scan(&mes, &monto); err != nil {
+			return ctx.JSON(fiber.Map{
+				"status": "Query8 error 2",
+			})
+		}
+		response = append(response, fiber.Map{
+			"mes":   mes,
+			"monto": monto,
+		})
+	}
+
 	return ctx.JSON(fiber.Map{
-		"status": "Query8",
+		"status":      "Query8",
+		"descripcion": "Ventas por mes de Inglaterra",
+		"response":    response,
 	})
 }
 
