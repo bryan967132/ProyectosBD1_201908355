@@ -99,8 +99,58 @@ LIMIT 1;`
 }
 
 func (c *Controller) Query2(ctx *fiber.Ctx) error {
+	query := `(SELECT do.producto_id, pr.nombre, cat.nombre AS categoria,
+		SUM(do.cantidad) AS cantidad_unidades,
+		SUM(do.cantidad * pr.precio) AS monto_vendido
+FROM datoorden do
+JOIN producto pr ON do.producto_id = pr.id
+JOIN categoria cat ON pr.categoria_id = cat.id
+GROUP BY do.producto_id
+ORDER BY cantidad_unidades DESC
+LIMIT 1)
+UNION
+(SELECT do.producto_id, pr.nombre, cat.nombre AS categoria,
+		SUM(do.cantidad) AS cantidad_unidades,
+		SUM(do.cantidad * pr.precio) AS monto_vendido
+FROM datoorden do
+JOIN producto pr ON do.producto_id = pr.id
+JOIN categoria cat ON pr.categoria_id = cat.id
+GROUP BY do.producto_id
+ORDER BY cantidad_unidades ASC
+LIMIT 1);`
+	rows, err := c.DB.Query(query)
+	if err != nil {
+		defer rows.Close()
+		return ctx.JSON(fiber.Map{
+			"status": "Query2 error 1",
+		})
+	}
+	defer rows.Close()
+
+	response := []fiber.Map{}
+
+	for rows.Next() {
+		var id_producto int
+		var pr_nombre string
+		var cat_nombre string
+		var cantidad_unidades float64
+		var monto_vendido float64
+		if err := rows.Scan(&id_producto, &pr_nombre, &cat_nombre, &cantidad_unidades, &monto_vendido); err != nil {
+			return ctx.JSON(fiber.Map{
+				"status": "Query2 error 2",
+			})
+		}
+		response = append(response, fiber.Map{
+			"producto":          fiber.Map{"id": id_producto, "nombre": pr_nombre, "categoria": cat_nombre},
+			"unidades vendidas": cantidad_unidades,
+			"monto vendido":     monto_vendido,
+		})
+	}
+
 	return ctx.JSON(fiber.Map{
-		"status": "Query2",
+		"status":      "Query2",
+		"descripcion": "Producto mas y menos comprado",
+		"response":    response,
 	})
 }
 
