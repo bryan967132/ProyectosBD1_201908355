@@ -245,8 +245,47 @@ LIMIT 1);`
 }
 
 func (c *Controller) Query5(ctx *fiber.Ctx) error {
+	query := `SELECT p.id, p.nombre AS pais, SUM(do.cantidad * pr.precio) AS monto_total
+FROM pais p
+JOIN cliente c ON p.id = c.pais_id
+JOIN orden o ON c.id = o.cliente_id
+JOIN datoorden do ON o.id = do.orden_id
+JOIN producto pr ON do.producto_id = pr.id
+GROUP BY p.id, p.nombre
+ORDER BY monto_total DESC
+LIMIT 5;`
+	rows, err := c.DB.Query(query)
+	if err != nil {
+		defer rows.Close()
+		return ctx.JSON(fiber.Map{
+			"status": "Query5 error 1",
+		})
+	}
+	defer rows.Close()
+
+	response := fiber.Map{}
+	i := 1
+
+	for rows.Next() {
+		var p_id int
+		var p_nombre string
+		var monto_total float64
+		if err := rows.Scan(&p_id, &p_nombre, &monto_total); err != nil {
+			return ctx.JSON(fiber.Map{
+				"status": "Query5 error 2",
+			})
+		}
+		response[fmt.Sprint(i)] = fiber.Map{
+			"pais":        fiber.Map{"id": p_id, "nombre": p_nombre},
+			"monto total": monto_total,
+		}
+		i++
+	}
+
 	return ctx.JSON(fiber.Map{
-		"status": "Query5",
+		"status":      "Query5",
+		"descripcion": "Top 5 de paises que mas han comprado en orden ascendente",
+		"response":    response,
 	})
 }
 
