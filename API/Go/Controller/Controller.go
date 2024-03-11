@@ -52,8 +52,48 @@ func (c *Controller) Running(ctx *fiber.Ctx) error {
 }
 
 func (c *Controller) Query1(ctx *fiber.Ctx) error {
+	query := `SELECT c.id, c.nombre, c.apellido, p.nombre AS pais, SUM(precio * cantidad) AS monto_total
+FROM cliente c
+JOIN orden o ON c.id = o.cliente_id
+JOIN datoorden do ON o.id = do.orden_id
+JOIN producto pr ON do.producto_id = pr.id
+JOIN vendedor v ON do.vendedor_id = v.id
+JOIN pais p ON c.pais_id = p.id
+GROUP BY c.id
+ORDER BY monto_total DESC
+LIMIT 1;`
+	rows, err := c.DB.Query(query)
+	if err != nil {
+		defer rows.Close()
+		return ctx.JSON(fiber.Map{
+			"status": "Query1 error 1",
+		})
+	}
+	defer rows.Close()
+
+	response := fiber.Map{}
+
+	for rows.Next() {
+		var c_id int
+		var c_nombre string
+		var c_apellido string
+		var p_nombre string
+		var monto_total float64
+		if err := rows.Scan(&c_id, &c_nombre, &c_apellido, &p_nombre, &monto_total); err != nil {
+			return ctx.JSON(fiber.Map{
+				"status": "Query1 error 2",
+			})
+		}
+		response = fiber.Map{
+			"cliente":     fiber.Map{"id": c_id, "nombre": c_nombre, "apellido": c_apellido},
+			"pais":        p_nombre,
+			"monto total": monto_total,
+		}
+	}
+
 	return ctx.JSON(fiber.Map{
-		"status": "Query1",
+		"status":   "Query1",
+		"response": response,
 	})
 }
 
