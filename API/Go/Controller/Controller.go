@@ -197,8 +197,50 @@ LIMIT 1;`
 }
 
 func (c *Controller) Query4(ctx *fiber.Ctx) error {
+	query := `(SELECT p.nombre AS pais, SUM(do.cantidad * pr.precio) AS monto_total
+FROM pais p
+JOIN cliente c ON p.id = c.pais_id
+JOIN orden o ON c.id = o.cliente_id
+JOIN datoorden do ON o.id = do.orden_id
+JOIN producto pr ON do.producto_id = pr.id
+GROUP BY p.nombre
+ORDER BY monto_total DESC
+LIMIT 1)
+UNION
+(SELECT p.nombre AS pais, SUM(do.cantidad * pr.precio) AS monto_total
+FROM pais p
+JOIN cliente c ON p.id = c.pais_id
+JOIN orden o ON c.id = o.cliente_id
+JOIN datoorden do ON o.id = do.orden_id
+JOIN producto pr ON do.producto_id = pr.id
+GROUP BY p.nombre
+ORDER BY monto_total ASC
+LIMIT 1);`
+	rows, err := c.DB.Query(query)
+	if err != nil {
+		defer rows.Close()
+		return ctx.JSON(fiber.Map{
+			"status": "Query4 error 1",
+		})
+	}
+	defer rows.Close()
+
+	response := []fiber.Map{}
+
+	for rows.Next() {
+		var p_nombre string
+		var monto_total float64
+		if err := rows.Scan(&p_nombre, &monto_total); err != nil {
+			return ctx.JSON(fiber.Map{
+				"status": "Query4 error 2",
+			})
+		}
+		response = append(response, fiber.Map{"pais": p_nombre, "monto total": monto_total})
+	}
 	return ctx.JSON(fiber.Map{
-		"status": "Query4",
+		"status":      "Query4",
+		"descripcion": "Pais que mas y menos ha vendido",
+		"response":    response,
 	})
 }
 
