@@ -424,8 +424,50 @@ ORDER BY mes ASC;`
 }
 
 func (c *Controller) Query9(ctx *fiber.Ctx) error {
+	query := `(SELECT MONTH(o.fecha) AS mes, SUM(do.cantidad * pr.precio) AS monto
+FROM orden o
+JOIN datoorden do ON o.id = do.orden_id
+JOIN producto pr ON do.producto_id = pr.id
+GROUP BY mes
+ORDER BY monto DESC
+LIMIT 1)
+UNION
+(SELECT MONTH(o.fecha) AS mes, SUM(do.cantidad * pr.precio) AS monto
+FROM orden o
+JOIN datoorden do ON o.id = do.orden_id
+JOIN producto pr ON do.producto_id = pr.id
+GROUP BY mes
+ORDER BY monto ASC
+LIMIT 1);`
+	rows, err := c.DB.Query(query)
+	if err != nil {
+		defer rows.Close()
+		return ctx.JSON(fiber.Map{
+			"status": "Query9 error 1",
+		})
+	}
+	defer rows.Close()
+
+	response := []fiber.Map{}
+
+	for rows.Next() {
+		var mes int
+		var monto string
+		if err := rows.Scan(&mes, &monto); err != nil {
+			return ctx.JSON(fiber.Map{
+				"status": "Query9 error 2",
+			})
+		}
+		response = append(response, fiber.Map{
+			"mes":   mes,
+			"monto": monto,
+		})
+	}
+
 	return ctx.JSON(fiber.Map{
-		"status": "Query9",
+		"status":      "Query9",
+		"descripcion": "Mes con mas y menos ventas",
+		"response":    response,
 	})
 }
 
