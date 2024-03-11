@@ -290,8 +290,50 @@ LIMIT 5;`
 }
 
 func (c *Controller) Query6(ctx *fiber.Ctx) error {
+	query := `(SELECT cat.nombre AS categoria, SUM(do.cantidad) AS cantidad_unidades
+FROM categoria cat
+JOIN producto pr ON cat.id = pr.categoria_id
+JOIN datoorden do ON pr.id = do.producto_id
+GROUP BY cat.nombre
+ORDER BY cantidad_unidades DESC
+LIMIT 1)
+UNION
+(SELECT cat.nombre AS categoria, SUM(do.cantidad) AS cantidad_unidades
+FROM categoria cat
+JOIN producto pr ON cat.id = pr.categoria_id
+JOIN datoorden do ON pr.id = do.producto_id
+GROUP BY cat.nombre
+ORDER BY cantidad_unidades ASC
+LIMIT 1);`
+	rows, err := c.DB.Query(query)
+	if err != nil {
+		defer rows.Close()
+		return ctx.JSON(fiber.Map{
+			"status": "Query6 error 1",
+		})
+	}
+	defer rows.Close()
+
+	response := []fiber.Map{}
+
+	for rows.Next() {
+		var cat_nombre string
+		var cantidad_unidades float64
+		if err := rows.Scan(&cat_nombre, &cantidad_unidades); err != nil {
+			return ctx.JSON(fiber.Map{
+				"status": "Query6 error 2",
+			})
+		}
+		response = append(response, fiber.Map{
+			"categoria":          cat_nombre,
+			"unidades compradas": cantidad_unidades,
+		})
+	}
+
 	return ctx.JSON(fiber.Map{
-		"status": "Query6",
+		"status":      "Query6",
+		"descripcion": "Categoria que mas y menos se ha comprado",
+		"response":    response,
 	})
 }
 
