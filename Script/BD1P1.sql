@@ -1,6 +1,3 @@
-CREATE DATABASE IF NOT EXISTS BD1P1;
-USE BD1P1;
-
 CREATE TABLE IF NOT EXISTS pais (
     id     INTEGER PRIMARY KEY NOT NULL,
     nombre VARCHAR(100) NOT NULL
@@ -19,7 +16,7 @@ CREATE TABLE IF NOT EXISTS cliente (
     telefono  VARCHAR(10) NOT NULL,
     tarjeta   VARCHAR(16) NOT NULL,
     edad      INTEGER NOT NULL,
-    salario   FLOAT(2) NOT NULL,
+    salario   INTEGER NOT NULL,
     genero    CHAR(1) NOT NULL,
     pais_id   INTEGER NOT NULL,
     FOREIGN KEY (pais_id) REFERENCES pais(id)
