@@ -155,8 +155,44 @@ LIMIT 1);`
 }
 
 func (c *Controller) Query3(ctx *fiber.Ctx) error {
+	query := `SELECT v.id, v.nombre, v.apellido, SUM(do.cantidad * pr.precio) AS monto_total_vendido
+FROM vendedor v
+JOIN datoorden do ON v.id = do.vendedor_id
+JOIN producto pr ON do.producto_id = pr.id
+GROUP BY v.id
+ORDER BY monto_total_vendido DESC
+LIMIT 1;`
+	rows, err := c.DB.Query(query)
+	if err != nil {
+		defer rows.Close()
+		return ctx.JSON(fiber.Map{
+			"status": "Query3 error 1",
+		})
+	}
+	defer rows.Close()
+
+	var response fiber.Map
+
+	for rows.Next() {
+		var v_id int
+		var v_nombre string
+		var v_apellido string
+		var monto_total_vendido float64
+		if err := rows.Scan(&v_id, &v_nombre, &v_apellido, &monto_total_vendido); err != nil {
+			return ctx.JSON(fiber.Map{
+				"status": "Query3 error 2",
+			})
+		}
+		response = fiber.Map{
+			"vencedor":            fiber.Map{"id": v_id, "nombre": v_nombre, "apellido": v_apellido},
+			"monto total vendido": monto_total_vendido,
+		}
+	}
+
 	return ctx.JSON(fiber.Map{
-		"status": "Query3",
+		"status":      "Query3",
+		"descripcion": "Persona que mas ha vendido",
+		"response":    response,
 	})
 }
 
