@@ -571,6 +571,14 @@ func (c *Controller) Postdatamodel(ctx *fiber.Ctx) error {
 		"../../../Data/ordenes.csv",
 	}
 
+	insertPais := ``
+	insertCategoria := ``
+	insertCliente := ``
+	insertVendedor := ``
+	insertProducto := ``
+	insertOrden := ``
+	insertDatoOrden := ``
+
 	for i, r := range files {
 		file, err := os.Open(r)
 		if err != nil {
@@ -596,23 +604,55 @@ func (c *Controller) Postdatamodel(ctx *fiber.Ctx) error {
 				continue
 			}
 			if i == 0 { // Pais
-				c.DB.Exec(fmt.Sprintf(`INSERT INTO pais (id, nombre) VALUE (%s, "%s")`, line[0], line[1]))
+				if insertPais != "" {
+					insertPais += ",\n"
+				}
+				insertPais += fmt.Sprintf(`(%s, "%s")`, line[0], line[1])
 			} else if i == 1 { // Categoria
-				c.DB.Exec(fmt.Sprintf(`INSERT INTO categoria (id, nombre) VALUE (%s, "%s")`, line[0], line[1]))
+				if insertCategoria != "" {
+					insertCategoria += ",\n"
+				}
+				insertCategoria += fmt.Sprintf(`(%s, "%s")`, line[0], line[1])
 			} else if i == 2 { // Cliente
-				c.DB.Exec(fmt.Sprintf(`INSERT INTO cliente (id, nombre, apellido, direccion, telefono, tarjeta, edad, salario, genero, pais_id) VALUE (%s, "%s", "%s", "%s", "%s", "%s", %s, %s, "%s", %s)`, line[0], line[1], line[2], line[3], line[4], line[5], line[6], line[7], line[8], line[9]))
+				if insertCliente != "" {
+					insertCliente += ",\n"
+				}
+				insertCliente += fmt.Sprintf(`(%s, "%s", "%s", "%s", "%s", "%s", %s, %s, "%s", %s)`, line[0], line[1], line[2], line[3], line[4], line[5], line[6], line[7], line[8], line[9])
 			} else if i == 3 { // Vendedor
+				if insertVendedor != "" {
+					insertVendedor += ",\n"
+				}
 				fullName := strings.Split(line[1], " ")
-				c.DB.Exec(fmt.Sprintf(`INSERT INTO vendedor (id, nombre, apellido, pais_id) VALUE (%s, "%s", "%s", %s)`, line[0], fullName[0], fullName[1], line[2]))
+				insertVendedor += fmt.Sprintf(`(%s, "%s", "%s", %s)`, line[0], fullName[0], fullName[1], line[2])
 			} else if i == 4 { // Producto
-				c.DB.Exec(fmt.Sprintf(`INSERT INTO producto (id, nombre, precio, categoria_id) VALUE (%s, "%s", %s, %s)`, line[0], line[1], line[2], line[3]))
+				if insertProducto != "" {
+					insertProducto += ",\n"
+				}
+				insertProducto += fmt.Sprintf(`(%s, "%s", %s, %s)`, line[0], line[1], line[2], line[3])
 			} else { // Orden
 				date := strings.Split(line[2], "/")
 				line[2] = fmt.Sprintf("%s-%s-%s", date[2], date[1], date[0])
-				c.DB.Exec(fmt.Sprintf(`INSERT INTO orden (id, fecha, cliente_id) VALUE (%s, '%s', %s)`, line[0], line[2], line[3]))
-				c.DB.Exec(fmt.Sprintf(`INSERT INTO datoorden (linea, cantidad, orden_id, vendedor_id, producto_id) VALUE (%s, %s, %s, %s, %s)`, line[1], line[6], line[0], line[4], line[5]))
+				registro := fmt.Sprintf(`(%s, '%s', %s)`, line[0], line[2], line[3])
+				if !strings.Contains(insertOrden, registro) {
+					if insertOrden != "" {
+						insertOrden += ",\n"
+					}
+					insertOrden += registro
+				}
+				if insertDatoOrden != "" {
+					insertDatoOrden += ",\n"
+				}
+				insertDatoOrden += fmt.Sprintf(`(%s, %s, %s, %s, %s)`, line[1], line[6], line[0], line[4], line[5])
 			}
 		}
+
+		c.DB.Exec(fmt.Sprintf("INSERT INTO pais (id, nombre) VALUE\n%s", insertPais))
+		c.DB.Exec(fmt.Sprintf("INSERT INTO categoria (id, nombre) VALUE\n%s", insertCategoria))
+		c.DB.Exec(fmt.Sprintf("INSERT INTO cliente (id, nombre, apellido, direccion, telefono, tarjeta, edad, salario, genero, pais_id) VALUE\n%s", insertCliente))
+		c.DB.Exec(fmt.Sprintf("INSERT INTO vendedor (id, nombre, apellido, pais_id) VALUE\n%s", insertVendedor))
+		c.DB.Exec(fmt.Sprintf("INSERT INTO producto (id, nombre, precio, categoria_id) VALUE\n%s", insertProducto))
+		c.DB.Exec(fmt.Sprintf("INSERT INTO orden (id, fecha, cliente_id) VALUE\n%s", insertOrden))
+		c.DB.Exec(fmt.Sprintf("INSERT INTO datoorden (linea, cantidad, orden_id, vendedor_id, producto_id) VALUE\n%s", insertDatoOrden))
 	}
 
 	return ctx.JSON(fiber.Map{
