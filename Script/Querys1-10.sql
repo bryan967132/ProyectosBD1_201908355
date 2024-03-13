@@ -1,3 +1,13 @@
+USE BD1P1;
+
+SELECT * FROM pais;
+SELECT * FROM categoria;
+SELECT * FROM cliente;
+SELECT * FROM vendedor;
+SELECT * FROM producto;
+SELECT * FROM orden;
+SELECT * FROM datoorden;
+
 -- CONSULTA 1
 SELECT c.id, c.nombre, c.apellido, p.nombre AS pais, SUM(precio * cantidad) AS monto_total
 FROM cliente c
