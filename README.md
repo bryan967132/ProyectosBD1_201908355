@@ -40,9 +40,9 @@ CREATE TABLE IF NOT EXISTS cliente (
 );
 
 CREATE TABLE IF NOT EXISTS orden (
-	id          INTEGER PRIMARY KEY NOT NULL,
+    id          INTEGER PRIMARY KEY NOT NULL,
     fecha       DATE NOT NULL,
-	cliente_id  INTEGER NOT NULL,
+    cliente_id  INTEGER NOT NULL,
     FOREIGN KEY (cliente_id) REFERENCES cliente(id)
 );
 
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS producto (
 );
 
 CREATE TABLE IF NOT EXISTS datoorden (
-	id          INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    id          INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     linea       INTEGER NOT NULL,
     cantidad    INTEGER NOT NULL,
     orden_id    INTEGER NOT NULL,
