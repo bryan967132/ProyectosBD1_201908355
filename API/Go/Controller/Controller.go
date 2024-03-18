@@ -52,7 +52,7 @@ func (c *Controller) Running(ctx *fiber.Ctx) error {
 }
 
 func (c *Controller) Query1(ctx *fiber.Ctx) error {
-	query := `SELECT c.id, c.nombre, c.apellido, p.nombre AS pais, SUM(precio * cantidad) AS monto_total
+	query := `SELECT c.id, c.nombre, c.apellido, p.nombre AS pais, SUM(precio * cantidad) AS monto_total, sum(1) as cantidad
 FROM cliente c
 JOIN orden o ON c.id = o.cliente_id
 JOIN datoorden do ON o.id = do.orden_id
@@ -79,7 +79,8 @@ LIMIT 1;`
 		var c_apellido string
 		var p_nombre string
 		var monto_total float64
-		if err := rows.Scan(&c_id, &c_nombre, &c_apellido, &p_nombre, &monto_total); err != nil {
+		var cantidad float64
+		if err := rows.Scan(&c_id, &c_nombre, &c_apellido, &p_nombre, &monto_total, &cantidad); err != nil {
 			return ctx.JSON(fiber.Map{
 				"status": "Query1 error 2",
 			})
@@ -88,6 +89,7 @@ LIMIT 1;`
 			"cliente":     fiber.Map{"id": c_id, "nombre": c_nombre, "apellido": c_apellido},
 			"pais":        p_nombre,
 			"monto total": monto_total,
+			"cantidad":    cantidad,
 		}
 	}
 
@@ -197,23 +199,21 @@ LIMIT 1;`
 }
 
 func (c *Controller) Query4(ctx *fiber.Ctx) error {
-	query := `(SELECT p.nombre AS pais, SUM(do.cantidad * pr.precio) AS monto_total
+	query := `(SELECT p.nombre AS pais, SUM(pr.precio * dor.cantidad) AS monto_total
 FROM pais p
-JOIN cliente c ON p.id = c.pais_id
-JOIN orden o ON c.id = o.cliente_id
-JOIN datoorden do ON o.id = do.orden_id
-JOIN producto pr ON do.producto_id = pr.id
-GROUP BY p.nombre
+JOIN vendedor v ON v.pais_id = p.id
+JOIN datoorden dor ON dor.vendedor_id = v.id
+JOIN producto pr ON pr.id = dor.producto_id
+GROUP BY pais
 ORDER BY monto_total DESC
 LIMIT 1)
 UNION
-(SELECT p.nombre AS pais, SUM(do.cantidad * pr.precio) AS monto_total
+(SELECT p.nombre AS pais, SUM(pr.precio * dor.cantidad) AS monto_total
 FROM pais p
-JOIN cliente c ON p.id = c.pais_id
-JOIN orden o ON c.id = o.cliente_id
-JOIN datoorden do ON o.id = do.orden_id
-JOIN producto pr ON do.producto_id = pr.id
-GROUP BY p.nombre
+JOIN vendedor v ON v.pais_id = p.id
+JOIN datoorden dor ON dor.vendedor_id = v.id
+JOIN producto pr ON pr.id = dor.producto_id
+GROUP BY pais
 ORDER BY monto_total ASC
 LIMIT 1);`
 	rows, err := c.DB.Query(query)
@@ -252,7 +252,7 @@ JOIN orden o ON c.id = o.cliente_id
 JOIN datoorden do ON o.id = do.orden_id
 JOIN producto pr ON do.producto_id = pr.id
 GROUP BY p.id, p.nombre
-ORDER BY monto_total DESC
+ORDER BY monto_total ASC
 LIMIT 5;`
 	rows, err := c.DB.Query(query)
 	if err != nil {
@@ -338,15 +338,21 @@ LIMIT 1);`
 }
 
 func (c *Controller) Query7(ctx *fiber.Ctx) error {
-	query := `SELECT p.nombre AS pais, cat.nombre AS categoria, SUM(do.cantidad) AS cantidad_unidades
-FROM pais p
-JOIN cliente c ON p.id = c.pais_id
-JOIN orden o ON c.id = o.cliente_id
-JOIN datoorden do ON o.id = do.orden_id
-JOIN producto pr ON do.producto_id = pr.id
-JOIN categoria cat ON pr.categoria_id = cat.id
-GROUP BY p.nombre, cat.nombre
-ORDER BY SUM(do.cantidad) DESC;`
+	query := `SELECT nombre_pais, nombre_categoria, cantidad_unidades FROM (
+	SELECT 
+		p.nombre AS nombre_pais,
+		cat.nombre AS nombre_categoria,
+		SUM(d.cantidad) AS cantidad_unidades,
+		ROW_NUMBER() OVER(PARTITION BY p.nombre ORDER BY SUM(d.cantidad) DESC) AS ranking
+	FROM pais p
+	JOIN cliente c ON p.id = c.pais_id
+	JOIN orden o ON c.id = o.cliente_id
+	JOIN datoorden d ON o.id = d.orden_id
+	JOIN producto pr ON d.producto_id = pr.id
+	JOIN categoria cat ON pr.categoria_id = cat.id
+	GROUP BY p.nombre, cat.nombre
+) t
+WHERE ranking = 1;`
 	rows, err := c.DB.Query(query)
 	if err != nil {
 		defer rows.Close()
@@ -382,12 +388,12 @@ ORDER BY SUM(do.cantidad) DESC;`
 }
 
 func (c *Controller) Query8(ctx *fiber.Ctx) error {
-	query := `SELECT MONTH(o.fecha) AS mes, SUM(do.cantidad * pr.precio) AS monto
-FROM orden o
-JOIN cliente c ON o.cliente_id = c.id
-JOIN datoorden do ON o.id = do.orden_id
-JOIN producto pr ON do.producto_id = pr.id
-JOIN pais p ON c.pais_id = p.id
+	query := `SELECT MONTH(o.fecha) AS mes, SUM(pr.precio * dor.cantidad) AS monto
+FROM pais p
+JOIN vendedor v ON v.pais_id = p.id
+JOIN datoorden dor ON dor.vendedor_id = v.id
+JOIN orden o ON o.id = dor.orden_id
+JOIN producto pr ON pr.id = dor.producto_id
 WHERE p.nombre = 'Inglaterra'
 GROUP BY mes
 ORDER BY mes ASC;`
@@ -424,18 +430,18 @@ ORDER BY mes ASC;`
 }
 
 func (c *Controller) Query9(ctx *fiber.Ctx) error {
-	query := `(SELECT MONTH(o.fecha) AS mes, SUM(do.cantidad * pr.precio) AS monto
+	query := `(SELECT MONTH(o.fecha) AS mes, SUM(dor.cantidad * pr.precio) AS monto
 FROM orden o
-JOIN datoorden do ON o.id = do.orden_id
-JOIN producto pr ON do.producto_id = pr.id
+JOIN datoorden dor ON dor.orden_id = o.id
+JOIN producto pr ON pr.id = dor.producto_id
 GROUP BY mes
 ORDER BY monto DESC
 LIMIT 1)
 UNION
-(SELECT MONTH(o.fecha) AS mes, SUM(do.cantidad * pr.precio) AS monto
+(SELECT MONTH(o.fecha) AS mes, SUM(dor.cantidad * pr.precio) AS monto
 FROM orden o
-JOIN datoorden do ON o.id = do.orden_id
-JOIN producto pr ON do.producto_id = pr.id
+JOIN datoorden dor ON dor.orden_id = o.id
+JOIN producto pr ON pr.id = dor.producto_id
 GROUP BY mes
 ORDER BY monto ASC
 LIMIT 1);`
