@@ -9,7 +9,7 @@ SELECT * FROM orden;
 SELECT * FROM datoorden;
 
 -- CONSULTA 1
-SELECT c.id, c.nombre, c.apellido, p.nombre AS pais, SUM(precio * cantidad) AS monto_total
+SELECT c.id, c.nombre, c.apellido, p.nombre AS pais, SUM(precio * cantidad) AS monto_total, sum(1) as cantidad
 FROM cliente c
 JOIN orden o ON c.id = o.cliente_id
 JOIN datoorden do ON o.id = do.orden_id
@@ -51,23 +51,21 @@ ORDER BY monto_total_vendido DESC
 LIMIT 1;
 
 -- CONSULTA 4
-(SELECT p.nombre AS pais, SUM(do.cantidad * pr.precio) AS monto_total
+(SELECT p.nombre AS pais, SUM(pr.precio * dor.cantidad) AS monto_total
 FROM pais p
-JOIN cliente c ON p.id = c.pais_id
-JOIN orden o ON c.id = o.cliente_id
-JOIN datoorden do ON o.id = do.orden_id
-JOIN producto pr ON do.producto_id = pr.id
-GROUP BY p.nombre
+JOIN vendedor v ON v.pais_id = p.id
+JOIN datoorden dor ON dor.vendedor_id = v.id
+JOIN producto pr ON pr.id = dor.producto_id
+GROUP BY pais
 ORDER BY monto_total DESC
 LIMIT 1)
 UNION
-(SELECT p.nombre AS pais, SUM(do.cantidad * pr.precio) AS monto_total
+(SELECT p.nombre AS pais, SUM(pr.precio * dor.cantidad) AS monto_total
 FROM pais p
-JOIN cliente c ON p.id = c.pais_id
-JOIN orden o ON c.id = o.cliente_id
-JOIN datoorden do ON o.id = do.orden_id
-JOIN producto pr ON do.producto_id = pr.id
-GROUP BY p.nombre
+JOIN vendedor v ON v.pais_id = p.id
+JOIN datoorden dor ON dor.vendedor_id = v.id
+JOIN producto pr ON pr.id = dor.producto_id
+GROUP BY pais
 ORDER BY monto_total ASC
 LIMIT 1);
 
@@ -79,7 +77,7 @@ JOIN orden o ON c.id = o.cliente_id
 JOIN datoorden do ON o.id = do.orden_id
 JOIN producto pr ON do.producto_id = pr.id
 GROUP BY p.id, p.nombre
-ORDER BY monto_total DESC
+ORDER BY monto_total ASC
 LIMIT 5;
 
 -- CONSULTA 6
@@ -100,40 +98,46 @@ ORDER BY cantidad_unidades ASC
 LIMIT 1);
 
 -- CONSULTA 7
-SELECT p.nombre AS pais, cat.nombre AS categoria, SUM(do.cantidad) AS cantidad_unidades
-FROM pais p
-JOIN cliente c ON p.id = c.pais_id
-JOIN orden o ON c.id = o.cliente_id
-JOIN datoorden do ON o.id = do.orden_id
-JOIN producto pr ON do.producto_id = pr.id
-JOIN categoria cat ON pr.categoria_id = cat.id
-GROUP BY p.nombre, cat.nombre
-ORDER BY SUM(do.cantidad) DESC;
+SELECT nombre_pais, nombre_categoria, cantidad_unidades FROM (
+    SELECT 
+        p.nombre AS nombre_pais,
+        cat.nombre AS nombre_categoria,
+        SUM(d.cantidad) AS cantidad_unidades,
+        ROW_NUMBER() OVER(PARTITION BY p.nombre ORDER BY SUM(d.cantidad) DESC) AS ranking
+    FROM pais p
+    JOIN cliente c ON p.id = c.pais_id
+    JOIN orden o ON c.id = o.cliente_id
+    JOIN datoorden d ON o.id = d.orden_id
+    JOIN producto pr ON d.producto_id = pr.id
+    JOIN categoria cat ON pr.categoria_id = cat.id
+    GROUP BY p.nombre, cat.nombre
+) t
+WHERE ranking = 1;
 
 -- CONSULTA 8
-SELECT MONTH(o.fecha) AS mes, SUM(do.cantidad * pr.precio) AS monto
-FROM orden o
-JOIN cliente c ON o.cliente_id = c.id
-JOIN datoorden do ON o.id = do.orden_id
-JOIN producto pr ON do.producto_id = pr.id
-JOIN pais p ON c.pais_id = p.id
+SELECT MONTH(o.fecha) AS mes, SUM(pr.precio * dor.cantidad) AS monto
+FROM pais p
+JOIN vendedor v ON v.pais_id = p.id
+JOIN datoorden dor ON dor.vendedor_id = v.id
+JOIN orden o ON o.id = dor.orden_id
+JOIN producto pr ON pr.id = dor.producto_id
 WHERE p.nombre = 'Inglaterra'
 GROUP BY mes
 ORDER BY mes ASC;
 
 -- CONSULTA 9
-(SELECT MONTH(o.fecha) AS mes, SUM(do.cantidad * pr.precio) AS monto
+(SELECT MONTH(o.fecha) AS mes, SUM(dor.cantidad * pr.precio) AS monto
 FROM orden o
-JOIN datoorden do ON o.id = do.orden_id
-JOIN producto pr ON do.producto_id = pr.id
+JOIN datoorden dor ON dor.orden_id = o.id
+JOIN producto pr ON pr.id = dor.producto_id
 GROUP BY mes
 ORDER BY monto DESC
 LIMIT 1)
 UNION
-(SELECT MONTH(o.fecha) AS mes, SUM(do.cantidad * pr.precio) AS monto
+(SELECT MONTH(o.fecha) AS mes, SUM(dor.cantidad * pr.precio) AS monto
 FROM orden o
-JOIN datoorden do ON o.id = do.orden_id
-JOIN producto pr ON do.producto_id = pr.id
+JOIN datoorden dor ON dor.orden_id = o.id
+JOIN producto pr ON pr.id = dor.producto_id
 GROUP BY mes
 ORDER BY monto ASC
 LIMIT 1);
