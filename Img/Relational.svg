@@ -1,5 +1,5 @@
 
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"  width="771" height="586">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"  width="771" height="585">
 <defs id="dmw_defs" >
 <svg id="fk_sym" viewBox="0 0 48.665 48.665" style="enable-background:new 0 0 48.665 48.665;" >
 <g>
@@ -45,74 +45,39 @@
 </clipPath>
 </defs>
 <g stroke-linecap="butt" >
-<path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-width="1" d="M223 514 L367 514" />
+<path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-width="1" d="M223 514 L300 514" />
 <polygon stroke="rgb(0,0,0)" stroke-dasharray="none" points="223 514 229 511 229 517" fill="rgb(0,0,0)" stroke-width="1" stroke-opacity="1.0"  />
-<path stroke-dasharray="none" d="M367.0 520.0 L355.0 514.0 L367.0 508.0 M354.4000005722046 520.0 L354.4000005722046 508.0" fill="white" stroke-width="1" stroke-opacity="1.0" stroke="rgb(0,0,0)" />
-</g>
-<g >
-<text x="243" y="511" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
- Vendedor_Pais_FK
-</text>
+<path stroke-dasharray="none" d="M300.0 520.0 L288.0 514.0 L300.0 508.0 M287.4000005722046 520.0 L287.4000005722046 508.0" fill="white" stroke-width="1" stroke-opacity="1.0" stroke="rgb(0,0,0)" />
 </g>
 <g stroke-linecap="butt" >
 <path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-width="1" d="M676 471 L676 364" />
 <polygon stroke="rgb(0,0,0)" stroke-dasharray="none" points="676 471 673 465 679 465" fill="rgb(0,0,0)" stroke-width="1" stroke-opacity="1.0"  />
 <path stroke-dasharray="none" d="M682.0 364.0 L676.0 376.0 L670.0 364.0 M682.0 376.5999994277954 L670.0 376.5999994277954" fill="white" stroke-width="1" stroke-opacity="1.0" stroke="rgb(0,0,0)" />
 </g>
-<g >
-<text x="612" y="414" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
- Producto_Categoria_FK
-</text>
-</g>
 <g stroke-linecap="butt" >
 <path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-width="1" d="M382 185 L382 239" />
 <polygon stroke="rgb(0,0,0)" stroke-dasharray="none" points="382 185 385 191 379 191" fill="rgb(0,0,0)" stroke-width="1" stroke-opacity="1.0"  />
 <path stroke-dasharray="none" d="M376.0 239.0 L382.0 227.0 L388.0 239.0 M376.0 226.4000005722046 L388.0 226.4000005722046" fill="white" stroke-width="1" stroke-opacity="1.0" stroke="rgb(0,0,0)" />
-</g>
-<g >
-<text x="321" y="209" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
- DatosOrden_Orden_FK
-</text>
 </g>
 <g stroke-linecap="butt" >
 <path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-width="1" d="M135 477 L135 269" />
 <polygon stroke="rgb(0,0,0)" stroke-dasharray="none" points="135 477 132 471 138 471" fill="rgb(0,0,0)" stroke-width="1" stroke-opacity="1.0"  />
 <path stroke-dasharray="none" d="M141.0 269.0 L135.0 281.0 L129.0 269.0 M141.0 281.5999994277954 L129.0 281.5999994277954" fill="white" stroke-width="1" stroke-opacity="1.0" stroke="rgb(0,0,0)" />
 </g>
-<g >
-<text x="89" y="370" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
- Cliente_Pais_FK
-</text>
-</g>
 <g stroke-linecap="butt" >
 <path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-width="1" d="M232 130 L297 130" />
 <polygon stroke="rgb(0,0,0)" stroke-dasharray="none" points="232 130 238 127 238 133" fill="rgb(0,0,0)" stroke-width="1" stroke-opacity="1.0"  />
 <path stroke-dasharray="none" d="M297.0 136.0 L285.0 130.0 L297.0 124.0 M284.4000005722046 136.0 L284.4000005722046 124.0" fill="white" stroke-width="1" stroke-opacity="1.0" stroke="rgb(0,0,0)" />
-</g>
-<g >
-<text x="214" y="127" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
- Orden_Cliente_FK
-</text>
 </g>
 <g stroke-linecap="butt" >
 <path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-width="1" d="M559 304 L496 304" />
 <polygon stroke="rgb(0,0,0)" stroke-dasharray="none" points="559 304 553 307 553 301" fill="rgb(0,0,0)" stroke-width="1" stroke-opacity="1.0"  />
 <path stroke-dasharray="none" d="M496.0 298.0 L508.0 304.0 L496.0 310.0 M508.5999994277954 298.0 L508.5999994277954 310.0" fill="white" stroke-width="1" stroke-opacity="1.0" stroke="rgb(0,0,0)" />
 </g>
-<g >
-<text x="472" y="301" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
- Orden_Producto_FK
-</text>
-</g>
 <g stroke-linecap="butt" >
-<path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-width="1" d="M431 471 L431 420" />
-<polygon stroke="rgb(0,0,0)" stroke-dasharray="none" points="431 471 428 465 434 465" fill="rgb(0,0,0)" stroke-width="1" stroke-opacity="1.0"  />
-<path stroke-dasharray="none" d="M437.0 420.0 L431.0 432.0 L425.0 420.0 M437.0 432.5999994277954 L425.0 432.5999994277954" fill="white" stroke-width="1" stroke-opacity="1.0" stroke="rgb(0,0,0)" />
-</g>
-<g >
-<text x="374" y="442" fill="rgb(0,0,0)" fill-opacity="1.0" font-size="10" stroke="none">
- Orden_Vendedor_FK
-</text>
+<path stroke="rgb(0,0,0)" fill="none" stroke-opacity="1.0"  stroke-width="1" d="M391 470 L391 420" />
+<polygon stroke="rgb(0,0,0)" stroke-dasharray="none" points="391 470 388 464 394 464" fill="rgb(0,0,0)" stroke-width="1" stroke-opacity="1.0"  />
+<path stroke-dasharray="none" d="M397.0 420.0 L391.0 432.0 L385.0 420.0 M397.0 432.5999994277954 L385.0 432.5999994277954" fill="white" stroke-width="1" stroke-opacity="1.0" stroke="rgb(0,0,0)" />
 </g>
 <g  fill="rgb(255,255,180)" stroke="rgb(0,0,255)" fill-opacity="1.0" stroke-opacity="1.0" clip-path="url(#clipPath1_0_)" transform="translate(588,471)" >
 <rect x="0" y="0" width="175" height="74" />
@@ -297,7 +262,7 @@ Producto_PK (id)
 Producto_Categoria_FK (Categoria_id)
 </text></a>
 </g>
-<g  fill="rgb(255,255,180)" stroke="rgb(0,0,255)" fill-opacity="1.0" stroke-opacity="1.0" clip-path="url(#clipPath7_0_)" transform="translate(367,471)" >
+<g  fill="rgb(255,255,180)" stroke="rgb(0,0,255)" fill-opacity="1.0" stroke-opacity="1.0" clip-path="url(#clipPath7_0_)" transform="translate(300,470)" >
 <rect x="0" y="0" width="181" height="114" />
 <text id="7AD38E2F-A04FA957EAA4" x="67" y="14" fill="rgb(0,0,255)" font-weight="bold"  fill-opacity="1.0" font-size="10" stroke="none">
 Vendedor
