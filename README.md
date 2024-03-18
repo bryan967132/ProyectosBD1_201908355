@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS datoorden (
 
 [Script del Modelo](./Script/BD1P1.sql)  
 [Script de Consultas de Manipulación del Modelo](./Script/Querys.sql)  
-[Script de Consultas de Información](./Script/BD1P1.sql)  
+[Script de Consultas de Información](./Script/Querys1-10.sql)  
 
 ## Relaciones
 
