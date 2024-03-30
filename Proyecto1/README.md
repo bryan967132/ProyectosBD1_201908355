@@ -5,13 +5,13 @@
 ## Modelos
 
 ### **Modelo Conceptual**
-![conceptual](./Img/Conceptual.svg )
+![conceptual](./Img/Conceptual.svg)  
 
 ### **Modelo Logico**
-![Logical](./Img/Logical.svg )
+![Logical](./Img/Logical.svg)  
 
 ### **Modelo Relacional**
-![Relational](./Img/Relational.svg)
+![Relational](./Img/Relational.svg)  
 
 ## Script De La Base De Datos BD1P1
 ```sql
