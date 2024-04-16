@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="A4ECB4CA-A74F-BEDC-54FB-285964759CAD" name="Transaccion">
+<createdBy>bryan</createdBy>
+<createdTime>2024-04-16 04:24:02 UTC</createdTime>
+<ownerDesignName>[SBD1]LogicalPhysical</ownerDesignName>
+<engineerTo>
+<item key="DB1F2D11-FCB8-261D-54A8-15EC797FA56A" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+</Entity>
