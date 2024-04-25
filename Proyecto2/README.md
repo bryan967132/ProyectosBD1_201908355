@@ -5,12 +5,15 @@
 ## Modelos
 
 ### **Modelo Conceptual**
+![Conceptual](./Models/Conceptual.svg)
 
 ### **Modelo Logico**
+![Conceptual](./Models/Logical.png)
 
 ### **Modelo Relacional**
+![Conceptual](./Models/Relational.png)
 
-## Script De La Base De Datos BD1P1 
+## Script De La Base De Datos BD1P2
 
 ## Relaciones
 
@@ -20,6 +23,4 @@
 
 ## Claves Primarias Y Foráneas
 
-## Datos De Entrada 
-
-## Normalización
+## Datos De Entrada
