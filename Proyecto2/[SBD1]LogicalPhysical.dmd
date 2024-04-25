@@ -1,8 +1,0 @@
-<?xml version = '1.0' encoding = 'UTF-8'?>
-<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="[SBD1]LogicalPhysical" id="1F13CFFC-A8DB-B40F-DE74-6F149C3EBB3E" version="3.5">
-<createdBy>bryan</createdBy>
-<createdTime>2024-04-16 02:18:07 UTC</createdTime>
-<ownerDesignName>[SBD1]LogicalPhysical</ownerDesignName>
-<capitalNames>false</capitalNames>
-<designId>1F13CFFC-A8DB-B40F-DE74-6F149C3EBB3E</designId>
-</OSDM_Design>
