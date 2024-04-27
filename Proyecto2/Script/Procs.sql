@@ -17,21 +17,21 @@ DELIMITER //
 
 -- registrarTipoCliente
 CREATE PROCEDURE BD1P2.registrarTipoCliente(
-	IN idTC          INTEGER,
+	IN idTC          BIGINT,
 	IN nombreTC      VARCHAR(40),
 	IN descripcionTC VARCHAR(200)
 ) BEGIN
-	IF descripcionTC REGEXP '^[[:alpha:]]+$' THEN
+	IF descripcionTC REGEXP '^[[:alpha:][:punct:][:space:]]+$' THEN
 		INSERT INTO BD1P2.TipoCliente (nombre, descripcion) VALUES
 		(nombreTC, descripcionTC);
 	ELSE
-		SELECT '¡LA DESCRIPCIÓN DEL TIPO DE CLIENTE DEBE CONTENER SOLO LETRAS!';
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡LA DESCRIPCIÓN DEL TIPO DE CLIENTE DEBE CONTENER SOLO LETRAS!';
+		SELECT '¡LA DESCRIPCIÓN DEL TIPO DE CLIENTE DEBE CONTENER SOLO LETRAS!' AS error_msg;
+		-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡LA DESCRIPCIÓN DEL TIPO DE CLIENTE DEBE CONTENER SOLO LETRAS!';
 	END IF;
 END //
 -- registrarTipoCuenta
 CREATE PROCEDURE BD1P2.registrarTipoCuenta(
-	IN idTC          INTEGER,
+	IN idTC          BIGINT,
 	IN nombreTC      VARCHAR(40),
 	IN descripcionTC VARCHAR(200)
 ) BEGIN
@@ -40,7 +40,7 @@ CREATE PROCEDURE BD1P2.registrarTipoCuenta(
 END //
 -- registrarTipoTransaccion
 CREATE PROCEDURE BD1P2.registrarTipoTransaccion(
-	IN idTC          INTEGER,
+	IN idTC          BIGINT,
 	IN nombreTC      VARCHAR(40),
 	IN descripcionTC VARCHAR(255)
 ) BEGIN
@@ -49,20 +49,20 @@ CREATE PROCEDURE BD1P2.registrarTipoTransaccion(
 END //
 -- crearProductoServicio
 CREATE PROCEDURE BD1P2.crearProductoServicio(
-	IN idPS          INTEGER,
-	IN tipoPS        INTEGER,
+	IN idPS          BIGINT,
+	IN tipoPS        BIGINT,
 	IN costoPS       FLOAT(2),
 	IN descripcionPS VARCHAR(200)
 ) BEGIN
-	IF tipoPS = 1 AND costoPS > 0 OR tipoPS = 2 AND costPS >= 0 THEN
+	IF tipoPS = 1 AND costoPS > 0 OR tipoPS = 2 AND costoPS >= 0 THEN
 		INSERT INTO BD1P2.Bien (id, costo, descripcion, tipobien_id) VALUES
 		(idPS, costoPS, descripcionPS, tipoPS);
 	ELSE IF tipoPS = 1 AND costoPS <= 0 THEN
-		SELECT '¡COSTO INCORRECTO PARA UN SERVICIO!';
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡COSTO INCORRECTO PARA UN SERVICIO!';
+		SELECT '¡COSTO INCORRECTO PARA UN SERVICIO!' AS error_msg;
+		-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡COSTO INCORRECTO PARA UN SERVICIO!';
 	ELSE IF tipoPS = 2 AND costPS < 0 THEN
-		SELECT '¡COSTO INCORRECTO PARA UN PRODUCTO!';
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡COSTO INCORRECTO PARA UN PRODUCTO!';
+		SELECT '¡COSTO INCORRECTO PARA UN PRODUCTO!' AS error_msg;
+		-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡COSTO INCORRECTO PARA UN PRODUCTO!';
 	END IF;
 	END IF;
 	END IF;
@@ -94,7 +94,7 @@ END //
 -- registrarTelefonos
 CREATE PROCEDURE BD1P2.registrarTelefonos(
 	IN cadena    VARCHAR(255),
-	IN clienteid INTEGER
+	IN clienteid BIGINT
 ) BEGIN
 	DECLARE telefono            VARCHAR(12);
 	DECLARE telefonosProcesados VARCHAR(255);
@@ -131,7 +131,7 @@ END //
 -- registrarCorreos
 CREATE PROCEDURE BD1P2.registrarCorreos(
 	IN cadena VARCHAR(255),
-	IN clienteid INTEGER
+	IN clienteid BIGINT
 ) BEGIN
 	DECLARE correo            VARCHAR(100);
 	DECLARE correosProcesados VARCHAR(255);
@@ -146,57 +146,57 @@ END //
 -- registrarCliente
 SET @clave = 'sisalebases1';
 CREATE PROCEDURE BD1P2.registrarCliente(
-	IN idC         INTEGER,
+	IN idC         BIGINT,
 	IN nombreC     VARCHAR(40),
 	IN apellidosC  VARCHAR(40),
 	IN telefonosC  VARCHAR(255),
 	IN correosC    VARCHAR(40),
 	IN usuarioC    VARCHAR(40),
 	IN contrasenaC VARCHAR(200),
-	IN idtipoC     INTEGER
+	IN idtipoC     BIGINT
 ) BEGIN
 	DECLARE correos_validos      BOOLEAN;
 	DECLARE telefonos_procesados VARCHAR(255);
 	DECLARE usuarioUsado         BOOLEAN DEFAULT FALSE;
-	IF nombreC REGEXP '^[[:alpha:]]+$' THEN
-		IF apellidosC REGEXP '^[[:alpha:]]+$' THEN
+	IF nombreC REGEXP '^[[:alpha:][:space:]]+$' THEN
+		IF apellidosC REGEXP '^[[:alpha:][:space:]]+$' THEN
 			SELECT TRUE INTO usuarioUsado FROM BD1P2.Cliente WHERE usuario = usuarioC;
-			IF usuarioUsado THEN
+			IF NOT usuarioUsado THEN
 				SET correos_validos = BD1P2.procesarCorreos(correosC);
-				IF corres_validos THEN
+				IF correos_validos THEN
 					SET telefonos_procesados = BD1P2.procesarTelefonos(telefonosC);
 					INSERT INTO BD1P2.Cliente (id, nombre, apellidos, usuario, contrasena, fechacreacion, tipocliente_id) VALUES
 					(idC, nombreC, apellidosC, usuarioC, HEX(AES_ENCRYPT(contrasenaC, @clave)), CURDATE(), idtipoC);
 				ELSE
-					SELECT '¡El formato del o los correos del usuario que intenta registrar no son correctos!';
-					SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡El formato del o los correos del usuario que intenta registrar no son correctos!';
+					SELECT '¡El formato del o los correos del usuario que intenta registrar no son correctos!' AS error_msg;
+					-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡El formato del o los correos del usuario que intenta registrar no son correctos!';
 				END IF;
 			ELSE
-				SELECT '¡El nombre de usuario ya se encuentra en uso!';
-				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡El nombre de usuario ya se encuentra en uso!';
+				SELECT '¡El nombre de usuario ya se encuentra en uso!' AS error_msg;
+				-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡El nombre de usuario ya se encuentra en uso!';
 			END IF;
 		ELSE
-			SELECT '¡El apellido del usuario que intenta registrar contiene caracteres extraños!';
-			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡El apellido del usuario que intenta registrar contiene caracteres extraños!';
+			SELECT '¡El apellido del usuario que intenta registrar contiene caracteres extraños!' AS error_msg;
+			-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡El apellido del usuario que intenta registrar contiene caracteres extraños!';
 		END IF;
 	ELSE
-		SELECT '¡El nombre del usuario que intenta registrar contiene caracteres extraños!';
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡El nombre del usuario que intenta registrar contiene caracteres extraños!';
+		SELECT '¡El nombre del usuario que intenta registrar contiene caracteres extraños!' AS error_msg;
+		-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡El nombre del usuario que intenta registrar contiene caracteres extraños!';
 	END IF;
 END //
 -- registrarCuenta
 CREATE PROCEDURE BD1P2.registrarCuenta(
-	IN idC          INTEGER,
+	IN idC          BIGINT,
 	IN montoApC     FLOAT(2),
 	IN saldoC       FLOAT(2),
 	IN descripcionC VARCHAR(255),
 	IN fechaApC     VARCHAR(30),
 	IN otrosdetC    VARCHAR(255),
-	IN tipocuentaC  INTEGER,
-	IN idclienteC   INTEGER
+	IN tipocuentaC  BIGINT,
+	IN idclienteC   BIGINT
 ) BEGIN
-	DECLARE idtipocuenta INTEGER DEFAULT -1;
-	DECLARE idcliente    INTEGER DEFAULT -1;
+	DECLARE idtipocuenta BIGINT DEFAULT -1;
+	DECLARE idcliente    BIGINT DEFAULT -1;
 	IF montoApC > 0 THEN
 		IF saldoC >= 0 THEN
 			SELECT id INTO idtipocuenta FROM BD1P2.TipoCuenta WHERE id = tipocuentaC;
@@ -206,33 +206,33 @@ CREATE PROCEDURE BD1P2.registrarCuenta(
 					INSERT INTO BD1P2.Cuenta (id, monto_apertura, saldo, descripcion, fecha_apertura, otros_detalles, tipocuenta_id, cliente_id) VALUES
 					(idC, montoApC, saldoC, descripcionC, NOW(), otrosdetC, tipocuentaC, idclienteC);
 				ELSE
-					SELECT '¡Intenta vincular la cuenta a un cliente inexistente!';
-					SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡Intenta vincular la cuenta a un cliente inexistente!';
+					SELECT '¡Intenta vincular la cuenta a un cliente inexistente!' AS error_msg;
+					-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡Intenta vincular la cuenta a un cliente inexistente!';
 				END IF;
 			ELSE
-				SELECT '¡Intenta asignar un tipo inexistente a la cuenta!';
-				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡Intenta asignar un tipo inexistente a la cuenta!';
+				SELECT '¡Intenta asignar un tipo inexistente a la cuenta!' AS error_msg;
+				-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡Intenta asignar un tipo inexistente a la cuenta!';
 			END IF;
 		ELSE
-			SELECT '¡El saldo para la nueva cuenta debe ser una cantidad positiva!';
-			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡El saldo para la nueva cuenta debe ser una cantidad positiva!';
+			SELECT '¡El saldo para la nueva cuenta debe ser una cantidad positiva!' AS error_msg;
+			-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡El saldo para la nueva cuenta debe ser una cantidad positiva!';
 		END IF;
 	ELSE
-		SELECT '¡El monto de apertura para la nueva cuenta debe ser una cantidad positiva!';
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡El monto de apertura para la nueva cuenta debe ser una cantidad positiva!';
+		SELECT '¡El monto de apertura para la nueva cuenta debe ser una cantidad positiva!' AS error_msg;
+		-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡El monto de apertura para la nueva cuenta debe ser una cantidad positiva!';
 	END IF;
 END //
 -- realizarCompra
 CREATE PROCEDURE BD1P2.realizarCompra(
-	IN idC            INTEGER,
+	IN idC            BIGINT,
 	IN fechaC         VARCHAR(30),
 	IN importeC       FLOAT(2),
 	IN otrosDetallesC VARCHAR(255),
-	IN idbienC        INTEGER,
-	IN idclienteC     INTEGER
+	IN idbienC        BIGINT,
+	IN idclienteC     BIGINT
 ) BEGIN
-	DECLARE tipo      INTEGER DEFAULT -1;
-	DECLARE idcliente INTEGER DEFAULT -1;
+	DECLARE tipo      BIGINT DEFAULT -1;
+	DECLARE idcliente BIGINT DEFAULT -1;
 	SELECT tipobien_id INTO tipo FROM BD1P2.Bien WHERE id = idbienC;
 	SELECT id INTO idcliente FROM BD1P2.Cliente WHERE id = idclienteC;
 	IF tipo = 2 THEN
@@ -241,12 +241,12 @@ CREATE PROCEDURE BD1P2.realizarCompra(
 				INSERT INTO BD1P2.Compra (id, fecha, importe, otros_detalles, bien_id, cliente_id) VALUE
 				(idC, STR_TO_DATE(fechaC, '%d/%m/%Y'), importeC, otrosDetallesC, idbienC, idclienteC);
 			ELSE
-				SELECT '¡No existe el cliente que quiere registrar en la compra!';
-				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡No existe el cliente que quiere registrar en la compra!';
+				SELECT '¡No existe el cliente que quiere registrar en la compra!' AS error_msg;
+				-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡No existe el cliente que quiere registrar en la compra!';
 			END IF;
 		ELSE
-			SELECT '¡El importe de la compra de un producto debe ser una cantidad positiva mayor que cero!';
-			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡El importe de la compra de un producto debe ser una cantidad positiva mayor que cero!';
+			SELECT '¡El importe de la compra de un producto debe ser una cantidad positiva mayor que cero!' AS error_msg;
+			-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡El importe de la compra de un producto debe ser una cantidad positiva mayor que cero!';
 		END IF;
 	ELSE IF tipo = 1 THEN
 		IF importeC = 0 THEN
@@ -254,26 +254,26 @@ CREATE PROCEDURE BD1P2.realizarCompra(
 				INSERT INTO BD1P2.Compra (id, fecha, importe, otros_detalles, bien_id, cliente_id) VALUE
 				(idC, STR_TO_DATE(fechaC, '%d/%m/%Y'), importeC, otrosDetallesC, idbienC, idclienteC);
 			ELSE
-				SELECT '¡No existe el cliente que quiere registrar en la compra!';
-				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡No existe el cliente que quiere registrar en la compra!';
+				SELECT '¡No existe el cliente que quiere registrar en la compra!' AS error_msg;
+				-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡No existe el cliente que quiere registrar en la compra!';
 			END IF;
 		ELSE
-			SELECT '¡El importe de la compra de un servicio debe ser igual a cero!';
-			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡El importe de la compra de un servicio debe ser igual a cero!';
+			SELECT '¡El importe de la compra de un servicio debe ser igual a cero!' AS error_msg;
+			-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡El importe de la compra de un servicio debe ser igual a cero!';
 		END IF;
 	ELSE
-		SELECT '¡Solo existen 1. Servicio 2. Producto para realizar una compra!';
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡Solo existen 1. Servicio 2. Producto para realizar una compra!';
+		SELECT '¡Solo existen 1. Servicio 2. Producto para realizar una compra!' AS error_msg;
+		-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡Solo existen 1. Servicio 2. Producto para realizar una compra!';
 	END IF;
 	END IF;
 END //
 -- realizarDeposito
 CREATE PROCEDURE BD1P2.realizarDeposito(
-	IN idD            INTEGER,
+	IN idD            BIGINT,
 	IN fechaD         VARCHAR(30),
 	IN montoD         FLOAT(2),
 	IN otrosDetallesD VARCHAR(255),
-	IN idclienteD     INTEGER
+	IN idclienteD     BIGINT
 ) BEGIN
 	DECLARE existeUsuario BOOLEAN DEFAULT FALSE;
 	SELECT TRUE INTO existeUsuario FROM BD1P2.Cliente WHERE id = idclienteD;
@@ -282,21 +282,21 @@ CREATE PROCEDURE BD1P2.realizarDeposito(
 			INSERT INTO BD1P2.Deposito (id, fecha, monto, otros_detalles, cliente_id) value
 			(idD, STR_TO_DATE(fechaD, '%d/%m/%Y'), montoD, otrosDetallesD, idclienteD);
 		ELSE
-			SELECT '¡El monto del depósito debe ser mayor que cero!';
-			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡El monto del depósito debe ser mayor que cero!';
+			SELECT '¡El monto del depósito debe ser mayor que cero!' AS error_msg;
+			-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡El monto del depósito debe ser mayor que cero!';
 		END IF;
 	ELSE
-		SELECT '¡No existe el usuario al que quiere vincular el depósito!';
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡No existe el usuario al que quiere vincular el depósito!';
+		SELECT '¡No existe el usuario al que quiere vincular el depósito!' AS error_msg;
+		-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡No existe el usuario al que quiere vincular el depósito!';
 	END IF;
 END //
 -- realizarDebito
 CREATE PROCEDURE BD1P2.realizarDebito(
-	IN idD            INTEGER,
+	IN idD            BIGINT,
 	IN fechaD         VARCHAR(30),
 	IN montoD         FLOAT(2),
 	IN otrosDetallesD VARCHAR(255),
-	IN idclienteD     INTEGER
+	IN idclienteD     BIGINT
 ) BEGIN
 	DECLARE existeUsuario BOOLEAN DEFAULT FALSE;
 	SELECT TRUE INTO existeUsuario FROM BD1P2.Cliente WHERE id = idclienteD;
@@ -305,25 +305,25 @@ CREATE PROCEDURE BD1P2.realizarDebito(
 			INSERT INTO BD1P2.Debito (id, fecha, monto, otros_detalles, cliente_id) value
 			(idD, STR_TO_DATE(fechaD, '%d/%m/%Y'), montoD, otrosDetallesD, idclienteD);
 		ELSE
-			SELECT '¡El monto del débito debe ser mayor que cero!';
-			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡El monto del débito debe ser mayor que cero!';
+			SELECT '¡El monto del débito debe ser mayor que cero!' AS error_msg;
+			-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡El monto del débito debe ser mayor que cero!';
 		END IF;
 	ELSE
-		SELECT '¡No existe el usuario al que quiere vincular el débito!';
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡No existe el usuario al que quiere vincular el débito!';
+		SELECT '¡No existe el usuario al que quiere vincular el débito!' AS error_msg;
+		-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡No existe el usuario al que quiere vincular el débito!';
 	END IF;
 END //
 -- asignarTransaccion
 CREATE PROCEDURE BD1P2.asignarTransaccion(
-	IN idT              INTEGER,
+	IN idT              BIGINT,
 	IN fechaT           VARCHAR(30),
 	IN otrosDetallesD   VARCHAR(255),
-	IN tipotransaccionD INTEGER,
-	IN idaccionD        INTEGER,
-	IN idcuentaD        INTEGER
+	IN tipotransaccionD BIGINT,
+	IN idaccionD        BIGINT,
+	IN idcuentaD        BIGINT
 ) BEGIN
-	DECLARE existeCuenta      INTEGER DEFAULT FALSE;
-	DECLARE tipotransaccion   INTEGER DEFAULT -1;
+	DECLARE existeCuenta      BIGINT DEFAULT FALSE;
+	DECLARE tipotransaccion   BIGINT DEFAULT -1;
 	DECLARE existetransaccion BOOLEAN DEFAULT FALSE;
 	DECLARE esCuentacorrecta  BOOLEAN DEFAULT FALSE;
 	DECLARE saldoCuenta       FLOAT(2) DEFAULT 0;
@@ -383,11 +383,11 @@ CREATE PROCEDURE BD1P2.asignarTransaccion(
 							END IF;
 						ELSE
 							IF tipotransaccion = 1 THEN -- COMPRA
-								SELECT '¡El saldo en la cuenta es insuficiente para realizar la compra!';
-								SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡El saldo en la cuenta es insuficiente para realizar la compra!';
+								SELECT '¡El saldo en la cuenta es insuficiente para realizar la compra!' AS error_msg;
+								-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡El saldo en la cuenta es insuficiente para realizar la compra!';
 							ELSE IF tipotransaccion = 3 THEN -- DEPOSITO
-								SELECT '¡El saldo en la cuenta es insuficiente para realizar el débito!';
-								SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡El saldo en la cuenta es insuficiente para realizar el débito!';
+								SELECT '¡El saldo en la cuenta es insuficiente para realizar el débito!' AS error_msg;
+								-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡El saldo en la cuenta es insuficiente para realizar el débito!';
 							END IF;
 							END IF;
 						END IF;
@@ -398,39 +398,39 @@ CREATE PROCEDURE BD1P2.asignarTransaccion(
 					END IF;
 				ELSE
 					IF tipotransaccion = 1 THEN -- COMPRA
-						SELECT '¡La cuenta y la compra no corresponden al mismo cliente!';
-						SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡La cuenta y la compra no corresponden al mismo cliente!';
+						SELECT '¡La cuenta y la compra no corresponden al mismo cliente!' AS error_msg;
+						-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡La cuenta y la compra no corresponden al mismo cliente!';
 					ELSE IF tipotransaccion = 2 THEN -- DEPOSITO
-						SELECT '¡La cuenta y el depósito no corresponden al mismo cliente!';
-						SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡La cuenta y el depósito no corresponden al mismo cliente!';
+						SELECT '¡La cuenta y el depósito no corresponden al mismo cliente!' AS error_msg;
+						-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡La cuenta y el depósito no corresponden al mismo cliente!';
 					ELSE IF tipotransaccion = 3 THEN -- DEPOSITO
-						SELECT '¡La cuenta y el débito no corresponden al mismo cliente!';
-						SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡La cuenta y el débito no corresponden al mismo cliente!';
+						SELECT '¡La cuenta y el débito no corresponden al mismo cliente!' AS error_msg;
+						-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡La cuenta y el débito no corresponden al mismo cliente!';
 					END IF;
 					END IF;
 					END IF;
 				END IF;
 			ELSE
 				IF tipotransaccion = 1 THEN -- COMPRA
-					SELECT '¡No existe la compra que quiere vincular a la transacción!';
-					SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡No existe la compra que quiere vincular a la transacción!';
+					SELECT '¡No existe la compra que quiere vincular a la transacción!' AS error_msg;
+					-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡No existe la compra que quiere vincular a la transacción!';
 				ELSE IF tipotransaccion = 2 THEN -- DEPOSITO
-					SELECT '¡No existe el depósito que quiere vincular a la transacción!';
-					SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡No existe el depósito que quiere vincular a la transacción!';
+					SELECT '¡No existe el depósito que quiere vincular a la transacción!' AS error_msg;
+					-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡No existe el depósito que quiere vincular a la transacción!';
 				ELSE IF tipotransaccion = 3 THEN -- DEPOSITO
-					SELECT '¡No existe el débito que quiere vincular a la transacción!';
-					SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡No existe el débito que quiere vincular a la transacción!';
+					SELECT '¡No existe el débito que quiere vincular a la transacción!' AS error_msg;
+					-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡No existe el débito que quiere vincular a la transacción!';
 				END IF;
 				END IF;
 				END IF;
 			END IF;
 		ELSE
-			SELECT '¡No existe el tipo de transaccion que quiere registrar!';
-			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡No existe el tipo de transaccion que quiere registrar!';
+			SELECT '¡No existe el tipo de transaccion que quiere registrar!' AS error_msg;
+			-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡No existe el tipo de transaccion que quiere registrar!';
 		END IF;
 	ELSE
-		SELECT '¡No existe la cuenta con la que quiere realizar una transacción!';
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '¡No existe la cuenta con la que quiere realizar una transacción!';
+		SELECT '¡No existe la cuenta con la que quiere realizar una transacción!' AS error_msg;
+		-- SIGNAL SQLSTATE '07S01' SET MESSAGE_TEXT = '¡No existe la cuenta con la que quiere realizar una transacción!';
 	END IF;
 END //
 DELIMITER ;
