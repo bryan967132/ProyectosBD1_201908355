@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS BD1P2.Historial (
 ```
 
 [Script del Modelo](./Script/BD1P2.sql)  
-[Script de Procedimientos y Funciones](./Script/BD1P2.sql)  
+[Script de Procedimientos y Funciones](./Script/Procs.sql)  
 
 ## Relaciones
 
