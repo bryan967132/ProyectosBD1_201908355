@@ -328,8 +328,9 @@ CREATE PROCEDURE BD1P2.asignarTransaccion(
 	DECLARE esCuentacorrecta  BOOLEAN DEFAULT FALSE;
 	DECLARE saldoCuenta       FLOAT(2) DEFAULT 0;
 	DECLARE montoTransaccion  FLOAT(2) DEFAULT 0;
-	SELECT id FROM BD1P2.TipoTransaccion WHERE id = tipotransaccionD;
+    SELECT TRUE INTO existeCuenta FROM BD1P2.Cuenta WHERE id = idcuentaD;
 	IF existeCuenta THEN
+		SELECT id INTO tipotransaccion FROM BD1P2.TipoTransaccion WHERE id = tipotransaccionD;
 		IF tipotransaccion != -1 THEN
 			IF tipotransaccion = 1 THEN -- COMPRA
 				SELECT TRUE INTO existetransaccion FROM BD1P2.Compra WHERE id = idaccionD;
