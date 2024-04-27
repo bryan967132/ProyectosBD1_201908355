@@ -1,0 +1,10 @@
+USE BD1P2;
+CALL consultarSaldoCliente(3030206080);
+CALL consultarSaldoCliente(3030206081);
+CALL consultarCliente(1001);
+CALL consultarCliente(1002);
+CALL consultarMovsCliente(1001);
+CALL consultarTipoCuentas(5);
+CALL consultarMovsGenFech('01/04/2024', '28/04/2024');
+CALL consultarMovsFechClien(1001, '01/04/2024', '28/04/2024');
+CALL consultarDesasignacion();
