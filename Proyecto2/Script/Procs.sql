@@ -365,18 +365,18 @@ CREATE PROCEDURE BD1P2.asignarTransaccion(
                         SELECT saldo INTO saldoCuenta FROM BD1P2.Cuenta WHERE id = idcuentaD;
                     END IF;
                     IF tipotransaccion = 1 THEN -- COMPRA
-						SELECT TRUE INTO esServicio
+                        SELECT TRUE INTO esServicio
                         FROM BD1P2.Compra c
                         INNER JOIN BD1P2.Bien b ON c.bien_id = b.id
                         WHERE c.id = idaccionD AND b.tipobien_id = 1;
                         IF esServicio THEN
-							SELECT b.costo INTO montoTransaccion
-							FROM BD1P2.Compra c
-							INNER JOIN BD1P2.Bien b ON c.bien_id = b.id
-							WHERE c.id = idaccionD AND b.tipobien_id = 1;
-						ELSE
-							SELECT importe INTO montoTransaccion FROM BD1P2.Compra WHERE id = idaccionD;
-						END IF;
+                            SELECT b.costo INTO montoTransaccion
+                            FROM BD1P2.Compra c
+                            INNER JOIN BD1P2.Bien b ON c.bien_id = b.id
+                            WHERE c.id = idaccionD AND b.tipobien_id = 1;
+                        ELSE
+                            SELECT importe INTO montoTransaccion FROM BD1P2.Compra WHERE id = idaccionD;
+                        END IF;
                     ELSE IF tipotransaccion = 2 THEN -- DEPOSITO
                         SELECT monto INTO montoTransaccion FROM BD1P2.Deposito WHERE id = idaccionD;
                     ELSE IF tipotransaccion = 3 THEN -- DEPOSITO
