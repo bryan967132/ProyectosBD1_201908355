@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS BD1P2.Bien (
     costo       FLOAT(2),
     descripcion VARCHAR(255),
     tipobien_id BIGINT NOT NULL,
-    FOREIGN KEY (tipobien_id) REFERENCES TipoBien (id)
+    FOREIGN KEY (tipobien_id) REFERENCES BD1P2.TipoBien (id)
 );
 
 CREATE TABLE IF NOT EXISTS BD1P2.Cliente (
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS BD1P2.Transaccion (
     deposito_id        BIGINT,
     debito_id          BIGINT,
     compra_id          BIGINT,
-    FOREIGN KEY (cuenta_id) REFERENCES Cuenta (id),
+    FOREIGN KEY (cuenta_id) REFERENCES BD1P2.Cuenta (id),
     FOREIGN KEY (tipotransaccion_id) REFERENCES BD1P2.TipoTransaccion (id),
     FOREIGN KEY (deposito_id) REFERENCES BD1P2.Deposito (id),
     FOREIGN KEY (debito_id) REFERENCES BD1P2.Debito (id),

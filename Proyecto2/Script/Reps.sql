@@ -65,7 +65,10 @@ CREATE PROCEDURE BD1P2.consultarMovsCliente(
     IF existeCliente THEN
         SELECT * FROM (
             (
-                SELECT t.id, 'Compra' AS 'Tipo Transacción', CONCAT('Q ', c.importe) Monto, b.descripcion 'Producto/Servicio', t.cuenta_id 'No. Cuenta', tc.nombre 'Tipo Cuenta'
+                SELECT t.id, 'Compra' AS 'Tipo Transacción', CASE 
+					WHEN c.importe = 0 THEN CONCAT('Q ', b.costo) 
+					ELSE CONCAT('Q ', c.importe) 
+				END AS Monto, b.descripcion 'Producto/Servicio', t.cuenta_id 'No. Cuenta', tc.nombre 'Tipo Cuenta'
                 FROM BD1P2.Transaccion t
                 INNER JOIN BD1P2.Compra c ON t.compra_id = c.id
                 INNER JOIN BD1P2.Cuenta cu ON t.cuenta_id = cu.id
@@ -114,7 +117,10 @@ CREATE PROCEDURE BD1P2.consultarMovsGenFech(
     SELECT * FROM (
         (
             SELECT t.id, 'Compra' AS 'Tipo Transacción', b.descripcion 'Producto/Servicio', cl.nombre 'Cliente',
-                t.cuenta_id 'No. Cuenta', tc.nombre 'Tipo Cuenta', t.fecha 'Fecha', CONCAT('Q ', c.importe) Monto, t.otros_detalles 'Detalles'
+                t.cuenta_id 'No. Cuenta', tc.nombre 'Tipo Cuenta', t.fecha 'Fecha', CASE 
+					WHEN c.importe = 0 THEN CONCAT('Q ', b.costo) 
+					ELSE CONCAT('Q ', c.importe) 
+				END AS Monto, t.otros_detalles 'Detalles'
             FROM BD1P2.Transaccion t
             INNER JOIN BD1P2.Compra c ON t.compra_id = c.id
             INNER JOIN BD1P2.Cuenta cu ON t.cuenta_id = cu.id
@@ -152,7 +158,10 @@ CREATE PROCEDURE BD1P2.consultarMovsFechClien(
     SELECT * FROM (
         (
             SELECT t.id, 'Compra' AS 'Tipo Transacción', b.descripcion 'Producto/Servicio', cl.nombre 'Cliente',
-                t.cuenta_id 'No. Cuenta', tc.nombre 'Tipo Cuenta', t.fecha 'Fecha', CONCAT('Q ', c.importe) Monto, t.otros_detalles 'Detalles'
+                t.cuenta_id 'No. Cuenta', tc.nombre 'Tipo Cuenta', t.fecha 'Fecha', CASE 
+					WHEN c.importe = 0 THEN CONCAT('Q ', b.costo) 
+					ELSE CONCAT('Q ', c.importe) 
+				END AS Monto, t.otros_detalles 'Detalles'
             FROM BD1P2.Transaccion t
             INNER JOIN BD1P2.Compra c ON t.compra_id = c.id
             INNER JOIN BD1P2.Cuenta cu ON t.cuenta_id = cu.id
