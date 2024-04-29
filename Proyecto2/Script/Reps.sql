@@ -4,7 +4,7 @@ DROP PROCEDURE IF EXISTS BD1P2.consultarMovsCliente;   -- 3
 DROP PROCEDURE IF EXISTS BD1P2.consultarTipoCuentas;   -- 4
 DROP PROCEDURE IF EXISTS BD1P2.consultarMovsGenFech;   -- 5
 DROP PROCEDURE IF EXISTS BD1P2.consultarMovsFechClien; -- 6
-DROP PROCEDURE IF EXISTS BD1P2.consultarDesasignacion; -- 7
+DROP PROCEDURE IF EXISTS BD1P2.consultarProductoServicio; -- 7
 
 DELIMITER //
 
@@ -73,14 +73,14 @@ CREATE PROCEDURE BD1P2.consultarMovsCliente(
                 INNER JOIN BD1P2.Bien b ON c.bien_id = b.id
                 WHERE t.compra_id IS NOT NULL AND cu.cliente_id = idCliente
             ) UNION (
-                SELECT t.id, 'Depósito' AS 'Tipo Transacción', CONCAT('Q ', d.monto) Monto, '' AS 'Producto/Servicio', t.cuenta_id 'No. Cuenta', tc.nombre 'Tipo Cuenta'
+                SELECT t.id, 'Depósito' AS 'Tipo Transacción', CONCAT('Q ', d.monto) Monto, 'Crédito' AS 'Producto/Servicio', t.cuenta_id 'No. Cuenta', tc.nombre 'Tipo Cuenta'
                 FROM BD1P2.Transaccion t
                 INNER JOIN BD1P2.Deposito d ON t.deposito_id = d.id
                 INNER JOIN BD1P2.Cuenta cu ON t.cuenta_id = cu.id
                 INNER JOIN BD1P2.TipoCuenta tc ON cu.tipocuenta_id = tc.id
                 WHERE t.deposito_id IS NOT NULL AND cu.cliente_id = idCliente
             ) UNION (
-                SELECT t.id, 'Débito' AS 'Tipo Transacción', CONCAT('Q ', d.monto) Monto, '' AS 'Producto/Servicio', t.cuenta_id 'No. Cuenta', tc.nombre 'Tipo Cuenta'
+                SELECT t.id, 'Débito' AS 'Tipo Transacción', CONCAT('Q ', d.monto) Monto, 'Débito' AS 'Producto/Servicio', t.cuenta_id 'No. Cuenta', tc.nombre 'Tipo Cuenta'
                 FROM BD1P2.Transaccion t
                 INNER JOIN BD1P2.Debito d ON t.debito_id = d.id
                 INNER JOIN BD1P2.Cuenta cu ON t.cuenta_id = cu.id
@@ -114,7 +114,7 @@ CREATE PROCEDURE BD1P2.consultarMovsGenFech(
     SELECT * FROM (
         (
             SELECT t.id, 'Compra' AS 'Tipo Transacción', b.descripcion 'Producto/Servicio', cl.nombre 'Cliente',
-                t.cuenta_id 'No. Cuenta', tc.nombre 'Tipo Cuenta', t.fecha 'Fecha', CONCAT('Q ', c.importe) Monto, t.otros_detalles
+                t.cuenta_id 'No. Cuenta', tc.nombre 'Tipo Cuenta', t.fecha 'Fecha', CONCAT('Q ', c.importe) Monto, t.otros_detalles 'Detalles'
             FROM BD1P2.Transaccion t
             INNER JOIN BD1P2.Compra c ON t.compra_id = c.id
             INNER JOIN BD1P2.Cuenta cu ON t.cuenta_id = cu.id
@@ -123,8 +123,8 @@ CREATE PROCEDURE BD1P2.consultarMovsGenFech(
             INNER JOIN BD1P2.Cliente cl ON cu.cliente_id = cl.id
             WHERE t.compra_id IS NOT NULL AND t.fecha BETWEEN STR_TO_DATE(fechainicio, '%d/%m/%Y') AND STR_TO_DATE(fechafinal, '%d/%m/%Y')
         ) UNION (
-            SELECT t.id, 'Depósito' AS 'Tipo Transacción', '' AS 'Producto/Servicio', cl.nombre 'Cliente',
-                t.cuenta_id 'No. Cuenta', tc.nombre 'Tipo Cuenta', t.fecha 'Fecha', CONCAT('Q ', d.monto) Monto, t.otros_detalles
+            SELECT t.id, 'Depósito' AS 'Tipo Transacción', 'Crédito' AS 'Producto/Servicio', cl.nombre 'Cliente',
+                t.cuenta_id 'No. Cuenta', tc.nombre 'Tipo Cuenta', t.fecha 'Fecha', CONCAT('Q ', d.monto) Monto, t.otros_detalles 'Detalles'
             FROM BD1P2.Transaccion t
             INNER JOIN BD1P2.Deposito d ON t.deposito_id = d.id
             INNER JOIN BD1P2.Cuenta cu ON t.cuenta_id = cu.id
@@ -132,8 +132,8 @@ CREATE PROCEDURE BD1P2.consultarMovsGenFech(
             INNER JOIN BD1P2.Cliente cl ON cu.cliente_id = cl.id
             WHERE t.deposito_id IS NOT NULL AND t.fecha BETWEEN STR_TO_DATE(fechainicio, '%d/%m/%Y') AND STR_TO_DATE(fechafinal, '%d/%m/%Y')
         ) UNION (
-            SELECT t.id, 'Débito' AS 'Tipo Transacción', '' AS 'Producto/Servicio', cl.nombre 'Cliente',
-                t.cuenta_id 'No. Cuenta', tc.nombre 'Tipo Cuenta', t.fecha 'Fecha', CONCAT('Q ', d.monto) Monto, t.otros_detalles
+            SELECT t.id, 'Débito' AS 'Tipo Transacción', 'Débito' AS 'Producto/Servicio', cl.nombre 'Cliente',
+                t.cuenta_id 'No. Cuenta', tc.nombre 'Tipo Cuenta', t.fecha 'Fecha', CONCAT('Q ', d.monto) Monto, t.otros_detalles 'Detalles'
             FROM BD1P2.Transaccion t
             INNER JOIN BD1P2.Debito d ON t.debito_id = d.id
             INNER JOIN BD1P2.Cuenta cu ON t.cuenta_id = cu.id
@@ -152,7 +152,7 @@ CREATE PROCEDURE BD1P2.consultarMovsFechClien(
     SELECT * FROM (
         (
             SELECT t.id, 'Compra' AS 'Tipo Transacción', b.descripcion 'Producto/Servicio', cl.nombre 'Cliente',
-                t.cuenta_id 'No. Cuenta', tc.nombre 'Tipo Cuenta', t.fecha 'Fecha', CONCAT('Q ', c.importe) Monto, t.otros_detalles
+                t.cuenta_id 'No. Cuenta', tc.nombre 'Tipo Cuenta', t.fecha 'Fecha', CONCAT('Q ', c.importe) Monto, t.otros_detalles 'Detalles'
             FROM BD1P2.Transaccion t
             INNER JOIN BD1P2.Compra c ON t.compra_id = c.id
             INNER JOIN BD1P2.Cuenta cu ON t.cuenta_id = cu.id
@@ -162,8 +162,8 @@ CREATE PROCEDURE BD1P2.consultarMovsFechClien(
             WHERE t.compra_id IS NOT NULL AND t.fecha BETWEEN STR_TO_DATE(fechainicio, '%d/%m/%Y') AND STR_TO_DATE(fechafinal, '%d/%m/%Y')
             AND cl.id = idCliente
         ) UNION (
-            SELECT t.id, 'Depósito' AS 'Tipo Transacción', '' AS 'Producto/Servicio', cl.nombre 'Cliente',
-                t.cuenta_id 'No. Cuenta', tc.nombre 'Tipo Cuenta', t.fecha 'Fecha', CONCAT('Q ', d.monto) Monto, t.otros_detalles
+            SELECT t.id, 'Depósito' AS 'Tipo Transacción', 'Crédito' AS 'Producto/Servicio', cl.nombre 'Cliente',
+                t.cuenta_id 'No. Cuenta', tc.nombre 'Tipo Cuenta', t.fecha 'Fecha', CONCAT('Q ', d.monto) Monto, t.otros_detalles 'Detalles'
             FROM BD1P2.Transaccion t
             INNER JOIN BD1P2.Deposito d ON t.deposito_id = d.id
             INNER JOIN BD1P2.Cuenta cu ON t.cuenta_id = cu.id
@@ -172,8 +172,8 @@ CREATE PROCEDURE BD1P2.consultarMovsFechClien(
             WHERE t.deposito_id IS NOT NULL AND t.fecha BETWEEN STR_TO_DATE(fechainicio, '%d/%m/%Y') AND STR_TO_DATE(fechafinal, '%d/%m/%Y')
             AND cl.id = idCliente
         ) UNION (
-            SELECT t.id, 'Débito' AS 'Tipo Transacción', '' AS 'Producto/Servicio', cl.nombre 'Cliente',
-                t.cuenta_id 'No. Cuenta', tc.nombre 'Tipo Cuenta', t.fecha 'Fecha', CONCAT('Q ', d.monto) Monto, t.otros_detalles
+            SELECT t.id, 'Débito' AS 'Tipo Transacción', 'Débito' AS 'Producto/Servicio', cl.nombre 'Cliente',
+                t.cuenta_id 'No. Cuenta', tc.nombre 'Tipo Cuenta', t.fecha 'Fecha', CONCAT('Q ', d.monto) Monto, t.otros_detalles 'Detalles'
             FROM BD1P2.Transaccion t
             INNER JOIN BD1P2.Debito d ON t.debito_id = d.id
             INNER JOIN BD1P2.Cuenta cu ON t.cuenta_id = cu.id
@@ -185,7 +185,7 @@ CREATE PROCEDURE BD1P2.consultarMovsFechClien(
     ) t ORDER BY t.id ASC;
 END //
 -- consultarDesasignacion; -- 7
-CREATE PROCEDURE BD1P2.consultarDesasignacion() BEGIN
+CREATE PROCEDURE BD1P2.consultarProductoServicio() BEGIN
     SELECT b.id 'Código Producto/Servicio', b.descripcion 'Nombre', CONCAT('Tipo = ', b.tipobien_id) 'Descripción', tb.nombre 'Tipo'
     FROM BD1P2.Bien b
     INNER JOIN BD1P2.TipoBien tb ON b.tipobien_id = tb.id;

@@ -307,8 +307,7 @@ FOR EACH ROW
 BEGIN
     INSERT INTO BD1P2.Historial (fecha, descripcion, tipo)
     VALUES (NOW(), 'Se ha realizado una acción en la tabla "Transaccion"', 'INSERT');
-END;
-//
+END; //
 
 CREATE TRIGGER BD1P2.Transaccion_UPDATE
 AFTER UPDATE ON BD1P2.Transaccion
@@ -316,8 +315,7 @@ FOR EACH ROW
 BEGIN
     INSERT INTO BD1P2.Historial (fecha, descripcion, tipo)
     VALUES (NOW(), 'Se ha realizado una acción en la tabla "Transaccion"', 'UPDATE');
-END;
-//
+END; //
 
 CREATE TRIGGER BD1P2.Transaccion_DELETE
 AFTER DELETE ON BD1P2.Transaccion
@@ -325,7 +323,6 @@ FOR EACH ROW
 BEGIN
     INSERT INTO BD1P2.Historial (fecha, descripcion, tipo)
     VALUES (NOW(), 'Se ha realizado una acción en la tabla "Transaccion"', 'DELETE');
-END;
-//
+END; //
 
 DELIMITER ;
