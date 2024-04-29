@@ -244,7 +244,7 @@ CREATE PROCEDURE BD1P2.registrarCuenta(
     DECLARE idcliente    BIGINT DEFAULT -1;
     DECLARE fechaNueva   DATETIME DEFAULT NOW();
     IF LENGTH(fechaApC) > 0 THEN
-		SET fechaNueva = STR_TO_DATE(fechaApC, '%d/%m/%Y %H:%i:%s');
+        SET fechaNueva = STR_TO_DATE(fechaApC, '%d/%m/%Y %H:%i:%s');
     END IF;
     SELECT TRUE INTO existeCuenta FROM BD1P2.Cuenta WHERE id = idC;
     IF NOT existeCuenta THEN
@@ -294,7 +294,7 @@ CREATE PROCEDURE BD1P2.realizarCompra(
     DECLARE idcliente    BIGINT DEFAULT -1;
     DECLARE fechaNueva   DATETIME DEFAULT NOW();
     IF LENGTH(fechaC) > 0 THEN
-		SET fechaNueva = STR_TO_DATE(fechaC, '%d/%m/%Y');
+        SET fechaNueva = STR_TO_DATE(fechaC, '%d/%m/%Y');
     END IF;
     SELECT TRUE INTO existeCompra FROM BD1P2.Compra WHERE id = idC;
     SELECT tipobien_id INTO tipo FROM BD1P2.Bien WHERE id = idbienC;
@@ -347,7 +347,7 @@ CREATE PROCEDURE BD1P2.realizarDeposito(
     DECLARE existeUsuario  BOOLEAN DEFAULT FALSE;
     DECLARE fechaNueva   DATETIME DEFAULT NOW();
     IF LENGTH(fechaD) > 0 THEN
-		SET fechaNueva = STR_TO_DATE(fechaD, '%d/%m/%Y');
+        SET fechaNueva = STR_TO_DATE(fechaD, '%d/%m/%Y');
     END IF;
     SELECT TRUE INTO existeDeposito FROM BD1P2.Deposito WHERE id = idD;
     SELECT TRUE INTO existeUsuario FROM BD1P2.Cliente WHERE id = idclienteD;
@@ -380,7 +380,7 @@ CREATE PROCEDURE BD1P2.realizarDebito(
     DECLARE existeUsuario BOOLEAN DEFAULT FALSE;
     DECLARE fechaNueva   DATETIME DEFAULT NOW();
     IF LENGTH(fechaD) > 0 THEN
-		SET fechaNueva = STR_TO_DATE(fechaD, '%d/%m/%Y');
+        SET fechaNueva = STR_TO_DATE(fechaD, '%d/%m/%Y');
     END IF;
     SELECT TRUE INTO existeDebito FROM BD1P2.Debito WHERE id = idD;
     SELECT TRUE INTO existeUsuario FROM BD1P2.Cliente WHERE id = idclienteD;
@@ -419,7 +419,7 @@ CREATE PROCEDURE BD1P2.asignarTransaccion(
     DECLARE esServicio        BOOLEAN DEFAULT FALSE;
     DECLARE fechaNueva   DATETIME DEFAULT NOW();
     IF LENGTH(fechaT) > 0 THEN
-		SET fechaNueva = STR_TO_DATE(fechaT, '%d/%m/%Y');
+        SET fechaNueva = STR_TO_DATE(fechaT, '%d/%m/%Y');
     END IF;
     SELECT TRUE INTO existeCuenta FROM BD1P2.Cuenta WHERE id = idcuentaD;
     IF existeCuenta THEN
